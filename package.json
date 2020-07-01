@@ -1,0 +1,19 @@
+{
+  "name": "openclassrooms-project-10-bank-api",
+  "version": "1.0.0",
+  "description": "Starter codebase for Project #10 in OpenClassrooms' Front-End Path",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenClassrooms-Student-Center/Front-End_API.git"
+  },
+  "author": "Ben Hong <ben@bencodezen.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OpenClassrooms-Student-Center/Front-End_API/issues"
+  },
+  "homepage": "https://github.com/OpenClassrooms-Student-Center/Front-End_API#readme"
+}
