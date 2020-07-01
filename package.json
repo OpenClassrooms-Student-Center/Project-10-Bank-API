@@ -1,19 +1,22 @@
 {
-  "name": "openclassrooms-project-10-bank-api",
-  "version": "1.0.0",
-  "description": "Starter codebase for Project #10 in OpenClassrooms' Front-End Path",
-  "main": "index.js",
+  "name": "argent-bank-api",
+  "version": "0.0.1",
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.12.3",
+    "swagger-express-mw": "^0.1.0"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/OpenClassrooms-Student-Center/Front-End_API.git"
-  },
-  "author": "Ben Hong <ben@bencodezen.io>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/OpenClassrooms-Student-Center/Front-End_API/issues"
-  },
-  "homepage": "https://github.com/OpenClassrooms-Student-Center/Front-End_API#readme"
+    "start": "node app.js",
+    "test": "swagger project test"
+  }
 }
