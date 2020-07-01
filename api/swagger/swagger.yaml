@@ -1,12 +1,12 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  version: "1.0.0"
+  version: '1.0.0'
   title: Bank Argent API
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /api
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -17,39 +17,39 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
+  /user:
     # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
+    x-swagger-router-controller: user
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns 'User' to the caller
       # used as the method name of the controller
-      operationId: hello
+      operationId: user
       parameters:
-        - name: name
+        - name: username
           in: query
-          description: The name of the person to whom to say hello
+          description: Customer's username
           required: false
           type: string
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: '#/definitions/UserResponse'
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  UserResponse:
     properties:
-      message:
+      firstName:
+        type: string
+      lastName:
         type: string
   ErrorResponse:
     required:
