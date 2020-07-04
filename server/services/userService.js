@@ -25,7 +25,7 @@ module.exports.createUser = async serviceData => {
   }
 }
 
-module.exports.loginUser = async serviceData => {
+module.exports.getUserProfile = async serviceData => {
   try {
     const user = await User.findOne({ email: serviceData.email })
 
@@ -33,8 +33,20 @@ module.exports.loginUser = async serviceData => {
       throw new Error('User not found!')
     }
 
-    console.log(serviceData)
-    console.log(user.password)
+    return user.toObject()
+  } catch (error) {
+    console.error('Error in userService.js', error)
+    throw new Error(error)
+  }
+}
+
+module.exports.loginUser = async serviceData => {
+  try {
+    const user = await User.findOne({ email: serviceData.email })
+
+    if (!user) {
+      throw new Error('User not found!')
+    }
 
     const isValid = await bcrypt.compare(serviceData.password, user.password)
 
