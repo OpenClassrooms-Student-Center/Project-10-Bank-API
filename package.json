@@ -12,6 +12,10 @@
     "express": "^4.17.1"
   },
   "scripts": {
+    "dev:server": "nodemon ./server/server.js",
     "server": "node ./server/server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
