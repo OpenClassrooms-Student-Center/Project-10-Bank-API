@@ -6,6 +6,7 @@ const dbConnection = require('./database/connection')
 dotEnv.config()
 
 const app = express()
+const PORT = process.env.PORT || 3001
 
 // Connect to the database
 dbConnection()
@@ -17,7 +18,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const PORT = process.env.PORT || 3001
+// Handle custom routes
+app.use('/api/v1/user', require('./routes/userRoutes'))
 
 app.get('/', (req, res, next) => {
   res.send('Hello from my Express server v2!')
