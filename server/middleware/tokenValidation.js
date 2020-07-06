@@ -16,10 +16,10 @@ module.exports.validateToken = (req, res, next) => {
     )
     return next()
   } catch (error) {
-    console.error(error)
+    console.error('Error in tokenValidation.js', error)
     response.status = 401
     response.message = error.message
   }
 
-  return restart.status(response.status).send(response)
+  return res.status(response.status).send(response)
 }
