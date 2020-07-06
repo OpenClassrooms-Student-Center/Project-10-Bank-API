@@ -26,7 +26,7 @@ module.exports.loginUser = async (req, res) => {
     response.message = 'User successfully logged in'
     response.body = responseFromService
   } catch (error) {
-    console.error('Error in userController.js')
+    console.error('Error in loginUser (userController.js)')
     response.status = 400
     response.message = error.message
   }
