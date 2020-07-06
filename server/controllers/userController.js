@@ -38,7 +38,7 @@ module.exports.getUserProfile = async (req, res) => {
   let response = {}
 
   try {
-    const responseFromService = await userService.getUserProfile(req.body)
+    const responseFromService = await userService.getUserProfile(req)
     response.status = 200
     response.message = 'Successfully got user profile data'
     response.body = responseFromService
