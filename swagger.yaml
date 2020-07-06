@@ -28,7 +28,7 @@ paths:
         '200':
           description: Login Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/LoginResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -81,6 +81,35 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -118,3 +147,20 @@ definitions:
         type: string
       body:
         type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
