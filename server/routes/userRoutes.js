@@ -13,4 +13,10 @@ router.post(
   userController.getUserProfile
 )
 
+router.put(
+  '/profile',
+  tokenValidation.validateToken,
+  userController.updateUserProfile
+)
+
 module.exports = router

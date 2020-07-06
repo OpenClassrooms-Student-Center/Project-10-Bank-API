@@ -70,3 +70,27 @@ module.exports.loginUser = async serviceData => {
     throw new Error(error)
   }
 }
+
+module.exports.updateUserProfile = async serviceData => {
+  try {
+    const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
+    const decodedJwtToken = jwt.decode(jwtToken)
+    const user = await User.findOneAndUpdate(
+      { _id: decodedJwtToken.id },
+      {
+        firstName: serviceData.body.firstName,
+        lastName: serviceData.body.lastName
+      },
+      { new: true }
+    )
+
+    if (!user) {
+      throw new Error('User not found!')
+    }
+
+    return user.toObject()
+  } catch (error) {
+    console.error('Error in userService.js', error)
+    throw new Error(error)
+  }
+}
