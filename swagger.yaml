@@ -21,7 +21,7 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Login'
       produces:
         - application/json
       responses:
@@ -66,12 +66,10 @@ paths:
       summary: User Profile API
       description: API for fetching a user profile
       parameters:
-        - in: body
-          name: body
-          description: Create User Payload
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
           required: true
-          schema:
-            $ref: '#/definitions/User'
       produces:
         - application/json
       responses:
@@ -93,10 +91,24 @@ definitions:
     properties:
       email:
         type: string
-        description: email of user
+        description: user email
       password:
         type: string
-        description: password of the user
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
   ApiResponse:
     type: object
     properties:
