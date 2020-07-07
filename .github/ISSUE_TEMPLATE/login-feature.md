@@ -1,10 +1,9 @@
 ---
-name: Login Feature
-about: User can login to the system
-title: ''
+name: Login Requirement
+about: Issue for the login requirement
+title: User can login to the system
 labels: ''
 assignees: ''
-
 ---
 
 A user should be able to:
