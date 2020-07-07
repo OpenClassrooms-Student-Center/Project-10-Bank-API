@@ -28,6 +28,6 @@ npm run dev:server
 
 Your server should now be running at http://locahost:3001!
 
-## Documentation
+## API Documentation
 
 To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
