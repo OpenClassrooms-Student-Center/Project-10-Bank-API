@@ -1,5 +1,5 @@
 ---
-name: \#1 Login Requirement
+name: '#1 Login Requirement'
 about: Issue for the login requirement
 title: User can login to the system
 labels: ''

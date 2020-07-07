@@ -1,5 +1,5 @@
 ---
-name: \#4 Update Profile Feature
+name: '#4 Update Profile Feature'
 about: Issue for the profile update requirement
 title: User can update their profile
 labels: ''

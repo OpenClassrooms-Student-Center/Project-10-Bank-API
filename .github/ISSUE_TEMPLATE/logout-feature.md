@@ -1,5 +1,5 @@
 ---
-name: \#2 Logout Requirement
+name: '#2 Logout Requirement'
 about: Issue for the logout requirement
 title: User can logout to the system
 labels: ''
