@@ -8,4 +8,4 @@ assignees: ''
 
 A user should be able to:
 
-- [ ] Edit their profile first name and last name
+- [ ] Edit their profile (first name and last name)
