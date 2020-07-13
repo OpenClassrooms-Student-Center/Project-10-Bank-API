@@ -8,6 +8,7 @@
   "license": "",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -19,6 +20,7 @@
   },
   "scripts": {
     "dev:server": "nodemon ./server/server.js",
+    "populate-db": "node ./server/scripts/populateDatabase.js",
     "server": "node ./server/server.js"
   },
   "devDependencies": {
