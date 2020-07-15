@@ -9,5 +9,5 @@ assignees: ''
 After successfully logging in, a user should be able to:
 
 - [ ] See their profile page
-- [ ] Which should contain their first name
+- [ ] See their first name on the profile page 
 - [ ] See placeholder bank account information
