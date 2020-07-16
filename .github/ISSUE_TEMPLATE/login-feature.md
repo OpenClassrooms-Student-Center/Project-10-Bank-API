@@ -10,4 +10,5 @@ A user should be able to:
 
 - [ ] Navigate to the login page (`/login`)
 - [ ] Fill out credentials
+- [ ] Login to the back-end API with JWT tokens for authentication
 - [ ] Successfully navigate to a profile page (`/profile`)
