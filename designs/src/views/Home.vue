@@ -1,12 +1,5 @@
 <template>
   <div class="home">
-    <nav class="main-nav">
-      <a href="#"><h1>Argent Bank</h1></a>
-      <a href="#">
-        <i class="fa fa-user-circle"></i>
-        Sign In
-      </a>
-    </nav>
     <main>
       <div class="hero">
         <section class="hero-content">
@@ -41,9 +34,6 @@
         </div>
       </section>
     </main>
-    <footer class="footer">
-      <p>Copyright 2020 Bank Argent</p>
-    </footer>
   </div>
 </template>
 

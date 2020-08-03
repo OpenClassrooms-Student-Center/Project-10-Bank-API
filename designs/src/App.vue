@@ -1,6 +1,20 @@
+<script>
+import MainFooter from './components/MainFooter'
+import MainNav from './components/MainNav'
+
+export default {
+  components: {
+    MainFooter,
+    MainNav
+  }
+}
+</script>
+
 <template>
   <div id="app">
+    <MainNav />
     <router-view />
+    <MainFooter />
   </div>
 </template>
 
@@ -15,26 +29,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: #ccc;
-}
-
-.main-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.main-nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
 }
 </style>
