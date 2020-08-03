@@ -58,37 +58,66 @@ export default {
 <style>
 .hero {
   background-image: url('../assets/bank-tree.jpeg');
-  background-position: 0% 33%;
+  background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 400px;
+  height: 300px;
   position: relative;
 }
 
 .hero-content {
-  position: absolute;
-  right: 50px;
-  top: 50px;
-  width: 300px;
+  position: relative;
+  top: 2rem;
+  width: 200px;
   background: white;
-  margin: 2rem;
   padding: 2rem;
   text-align: left;
+  margin: 0 auto;
 }
 
 .hero-content .subtitle {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0;
 }
 
 .hero-content .text {
   margin-bottom: 0;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 920px) {
+  .hero {
+    height: 400px;
+    background-position: 0% 33%;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 300px;
+    margin: 2rem;
+  }
+
+  .hero-content .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .hero-content .text {
+    font-size: 1.2rem;
+  }
 }
 
 .features {
   display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 920px) {
+  .features {
+    flex-direction: row;
+  }
 }
 
 .feature-icon {
