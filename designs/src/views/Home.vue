@@ -1,3 +1,32 @@
+<script>
+export default {
+  data() {
+    return {
+      features: [
+        {
+          icon: require('../assets/icon-chat.png'),
+          title: 'You are our #1 priority',
+          description:
+            'Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes.'
+        },
+        {
+          icon: require('../assets/icon-money.png'),
+          title: 'More savings means higher rates',
+          description:
+            'The more you save with us, the higher your interest rate will be!'
+        },
+        {
+          icon: require('../assets/icon-security.png'),
+          title: 'Security you can trust',
+          description:
+            'We use top of the line encryption to make sure your data and money is always safe.'
+        }
+      ]
+    }
+  }
+}
+</script>
+
 <template>
   <div class="home">
     <main>
@@ -11,37 +40,20 @@
         </section>
       </div>
       <section class="features">
-        <h2>Features</h2>
-        <div>
-          <h3>You are our #1 priority</h3>
-          <p>
-            Need to talk to a representative? You can get in touch through our
-            24/7 chat or through a phone call in less than 5 minutes.
-          </p>
-        </div>
-        <div>
-          <h3>More savings means higher rates</h3>
-          <p>
-            The more you save with us, the higher your interest rate will be!
-          </p>
-        </div>
-        <div>
-          <h3>Security you can trust</h3>
-          <p>
-            We use top of the line encryption to make sure your data and money
-            is always safe.
-          </p>
+        <h2 class="sr-only">Features</h2>
+        <div
+          v-for="(feature, index) in features"
+          :key="`feature-${index}`"
+          class="feature-item"
+        >
+          <img class="feature-icon" :src="feature.icon" alt="Chat Icon" />
+          <h3 class="feature-item-title">{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
         </div>
       </section>
     </main>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'Home'
-}
-</script>
 
 <style>
 .hero {
@@ -73,5 +85,28 @@ export default {
 .hero-content .text {
   margin-bottom: 0;
   font-size: 1.2rem;
+}
+
+.features {
+  display: flex;
+}
+
+.feature-icon {
+  width: 100px;
+  border: 10px solid #00bc77;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.feature-item {
+  flex: 1;
+  padding: 2.5rem;
+}
+
+.feature-item-title {
+  color: #222;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 </style>

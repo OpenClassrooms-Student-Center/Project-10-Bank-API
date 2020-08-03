@@ -4,7 +4,7 @@ export default {}
 
 <template>
   <footer class="footer">
-    <p>Copyright 2020 Bank Argent</p>
+    <p class="footer-text">Copyright 2020 Bank Argent</p>
   </footer>
 </template>
 
@@ -12,5 +12,12 @@ export default {}
 .footer {
   display: flex;
   justify-content: center;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
+}
+
+.footer-text {
+  margin: 0;
+  padding: 0;
 }
 </style>
