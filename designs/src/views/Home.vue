@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-  <div class="home">
+  <div class="home main">
     <main>
       <div class="hero">
         <section class="hero-content">
