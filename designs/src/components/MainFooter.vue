@@ -4,7 +4,7 @@ export default {}
 
 <template>
   <footer class="footer">
-    <p class="footer-text">Copyright 2020 Bank Argent</p>
+    <p class="footer-text">Copyright 2020 Argent Bank</p>
   </footer>
 </template>
 

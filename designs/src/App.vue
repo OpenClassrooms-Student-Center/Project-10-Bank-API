@@ -39,7 +39,7 @@ body {
 }
 
 .bg-dark {
-  background-color: #00311e;
+  background-color: #12002b;
 }
 
 .sr-only {

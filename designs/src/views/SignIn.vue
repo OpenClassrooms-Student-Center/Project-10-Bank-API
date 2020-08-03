@@ -40,10 +40,7 @@ export default {
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 1rem;
-  background-color: #fff;
   border-color: #00bc77;
-  border-shadow: 0;
-  color: #00bc77;
   background-color: #00bc77;
   color: #fff;
 }
