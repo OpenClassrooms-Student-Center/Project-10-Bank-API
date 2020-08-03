@@ -13,13 +13,17 @@ export default {}
       <h1 class="sr-only">Argent Bank</h1>
     </a>
     <div v-if="$route.path === '/user'">
-      <a href="/sign-out">
+      <a class="main-nav-item" href="/user">
         <i class="fa fa-user-circle"></i>
+        Tony
+      </a>
+      <a class="main-nav-item" href="/sign-out">
+        <i class="fa fa-sign-out"></i>
         Sign Out
       </a>
     </div>
     <div v-else>
-      <a href="/sign-in">
+      <a class="main-nav-item" href="/sign-in">
         <i class="fa fa-user-circle"></i>
         Sign In
       </a>
@@ -42,6 +46,15 @@ export default {}
 
 .main-nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.main-nav-item {
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+
+.main-nav-item:hover {
+  text-decoration: underline;
 }
 
 .main-nav-logo {
