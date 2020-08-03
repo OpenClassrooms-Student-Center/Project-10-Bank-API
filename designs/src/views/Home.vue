@@ -3,11 +3,11 @@
     <main>
       <div class="hero">
         <section class="hero-content">
-          <h2>Promoted Content</h2>
-          <p>No fees.</p>
-          <p>No minimum deposit.</p>
-          <p>High interest rates.</p>
-          <p>Open a savings account with argent bank today!</p>
+          <h2 class="sr-only">Promoted Content</h2>
+          <p class="subtitle">No fees.</p>
+          <p class="subtitle">No minimum deposit.</p>
+          <p class="subtitle">High interest rates.</p>
+          <p class="text">Open a savings account with Argent Bank today!</p>
         </section>
       </div>
       <section class="features">
@@ -43,4 +43,35 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.hero {
+  background-image: url('../assets/bank-tree.jpeg');
+  background-position: 0% 33%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 400px;
+  position: relative;
+}
+
+.hero-content {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  width: 300px;
+  background: white;
+  margin: 2rem;
+  padding: 2rem;
+  text-align: left;
+}
+
+.hero-content .subtitle {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.hero-content .text {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+</style>
