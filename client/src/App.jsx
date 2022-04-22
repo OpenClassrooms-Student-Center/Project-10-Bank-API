@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import MainNav from "./components/MainNav/MainNav";
-import Footer from "./components/Footer/Footer";
+import MainNav from "./components/ui/MainNav/MainNav";
+import Footer from "./components/ui/Footer/Footer";
 
-const Home = lazy(() => import("./pages/Home/Home"));
-const SignIn = lazy(() => import("./pages/SignIn/SignIn"));
-const User = lazy(() => import("./pages/User/User"));
+const Home = lazy(() => import("./components/pages/Home/Home"));
+const SignIn = lazy(() => import("./components/pages/SignIn/SignIn"));
+const Profile = lazy(() => import("./components/pages/Profile/Profile"));
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Suspense>
 

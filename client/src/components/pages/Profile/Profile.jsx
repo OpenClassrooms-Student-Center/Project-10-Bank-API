@@ -1,11 +1,25 @@
-function User() {
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserProfile } from "../../../store/user/action.creator";
+
+function Profile() {
+  const dispatch = useDispatch();
+  const { loading, error, profile } = useSelector(state => state.user);
+  console.log("profile", profile);
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <main className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {profile.firstName} {profile.lastName}!
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>
@@ -44,4 +58,4 @@ function User() {
   );
 }
 
-export default User;
+export default Profile;
