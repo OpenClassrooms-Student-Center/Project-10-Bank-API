@@ -1,6 +1,18 @@
+import Nav from '../../components/Nav';
+import Banner from '../../components/Banner';
+import Feature from '../../components/Feature';
+import Footer from '../../components/Footer';
+
 const Homepage: React.FC = (): JSX.Element => {
     return (
-      <h1>Argent Bank est en cours de maintenance</h1>
+        <>
+            <Nav/>
+            <main>
+              <Banner/>
+              <Feature/>
+            </main>
+            <Footer/>
+        </>
     );
 };
   
