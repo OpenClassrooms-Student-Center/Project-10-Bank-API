@@ -14,7 +14,7 @@ const Nav: React.FC = (): JSX.Element => {
             </Link>
             <div>
                 <Link className="main-nav-item" to="/login">
-                    <i className="fa fa-user-circle"/>
+                    <i className="fa fa-user-circle nav-sign-in-icon"/>
                     Sign In
                 </Link>
             </div>
