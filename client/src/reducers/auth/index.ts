@@ -1,7 +1,9 @@
 import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../../actions/types";
 
 let user = localStorage.getItem("user");
+console.log(user, user === null);
 if (user) user = JSON.parse(user);
+console.log(user);
 
 export const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 

@@ -19,18 +19,19 @@ export const register: Function = (email: string, password: string, firstName: s
 export const login: Function = (email: string, password: string): Function => (dispatch: Function) => {
     console.log("Login action called")
     return signIn(email, password).then((res: any) => res.json()).then((response: any) => {
+        const user = {
+            email: email,
+            password: password,
+            token: response.body.token
+        }
         if (response.status === 200) {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {
-                    user: {
-                        email: email,
-                        password: password,
-                        token: response.body.token
-                    }
+                    user: user
                 }
             });
-           localStorage.setItem("user", JSON.stringify(response.body.token));
+           localStorage.setItem("user", JSON.stringify(user));
         } else {
             dispatch({
                 type: LOGIN_FAIL,
@@ -43,5 +44,5 @@ export const logout: Function = (): Function => (dispatch: Function) => {
     dispatch({
         type: LOGOUT,
     });
-    localStorage.setItem("user", '');
+    localStorage.setItem("user", 'null');
 };
