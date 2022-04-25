@@ -1,11 +1,11 @@
 import actionTypes from "./types";
-import { getToken, removeToken } from "../../services/auth.service";
+import { getToken, setToken, removeToken } from "../../services/auth.service";
 
 export const login =
   ({ email, password }) =>
   async dispatch => {
     try {
-      const token = await getToken({ email, password });
+      const token = getToken() ?? (await setToken({ email, password }));
       dispatch({
         type: actionTypes.AUTHENTICATED,
         payload: token,

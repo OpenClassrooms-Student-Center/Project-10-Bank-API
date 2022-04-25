@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login } from "../../../store/auth/actions.creator";
+import ROUTES from "../../../constants/routes";
 
 function SignIn() {
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { authenticated, error } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -13,13 +14,15 @@ function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({ email, password }) => dispatch(login({ email, password }));
+  const onSubmit = credentials => dispatch(login(credentials));
+
+  if (error) console.log("login error", error);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/profile");
+    if (authenticated) {
+      navigate(ROUTES.PROFILE);
     }
-  }, [isLoggedIn, navigate]);
+  }, [authenticated, navigate]);
 
   return (
     <main className="main bg-dark">

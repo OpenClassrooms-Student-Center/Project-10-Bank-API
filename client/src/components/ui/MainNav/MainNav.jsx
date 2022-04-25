@@ -5,7 +5,7 @@ import ROUTES from "../../../constants/routes";
 import argentLogo from "../../../assets/img/argentBankLogo.png";
 
 function MainNav() {
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { authenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -19,7 +19,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {isLoggedIn ? (
+        {authenticated ? (
           <button className="main-nav-item" onClick={handleSignOut}>
             <i className="fa fa-sign-out" aria-hidden="true"></i>
             Sign Out

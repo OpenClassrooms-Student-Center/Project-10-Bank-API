@@ -1,6 +1,7 @@
 import actionTypes from "./types.js";
-
-const initialState = { isLoggedIn: false, token: null, error: null };
+import { getToken } from "../../services/auth.service";
+const token = getToken();
+const initialState = { authenticated: token ? true : false, token: token ?? null, error: null };
 
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -8,14 +9,14 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTHENTICATED:
       return {
         ...state,
-        isLoggedIn: true,
+        authenticated: true,
         token: payload,
         error: null,
       };
     case actionTypes.NOT_AUTHENTICATED:
       return {
         ...state,
-        isLoggedIn: false,
+        authenticated: false,
         token: null,
         error: payload,
       };

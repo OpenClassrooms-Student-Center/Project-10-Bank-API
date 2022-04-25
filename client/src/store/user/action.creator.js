@@ -3,7 +3,8 @@ import { fetchUser } from "../../services/user.service";
 
 export const getUserProfile = () => async dispatch => {
   try {
-    const userProfile = await fetchUser();
+    const abortController = new AbortController();
+    const userProfile = await fetchUser(abortController);
     dispatch({
       type: actionTypes.GET_USER_PROFILE_SUCCESS,
       payload: userProfile,
