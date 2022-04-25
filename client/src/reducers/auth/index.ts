@@ -3,9 +3,9 @@ import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } fr
 let user = localStorage.getItem("user");
 if (user) user = JSON.parse(user);
 
-const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
+export const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 
-export default function (state = initialState, action: any) {
+export const authReducer = (state = initialState, action: any) => {
     const { type, payload } = action;
     switch (type) {
       case REGISTER_SUCCESS:
