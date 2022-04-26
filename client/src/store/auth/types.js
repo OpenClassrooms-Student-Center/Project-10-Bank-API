@@ -4,3 +4,9 @@ const actionTypes = Object.freeze({
 });
 
 export default actionTypes;
+
+/**
+ * AUTH_REQUEST
+ * AUTH_SUCCESS
+ * AUTH_FAILURE
+ */

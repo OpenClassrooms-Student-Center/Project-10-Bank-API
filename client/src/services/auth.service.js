@@ -6,7 +6,7 @@ export const getToken = async => {
   return token;
 };
 
-export const setToken = async ({ email, password }) => {
+export const auth = async ({ email, password }) => {
   const response = await axios({
     method: "post",
     url: API_URL + "login",

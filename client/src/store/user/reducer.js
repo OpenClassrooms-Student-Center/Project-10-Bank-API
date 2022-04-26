@@ -4,6 +4,7 @@ const initialState = {
   loading: true,
   error: null,
   profile: null,
+  editing: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const reducer = (state = initialState, action) => {
         error: payload,
         isLoggedIn: false,
         profile: null,
+      };
+    case actionTypes.EDIT_USER_PROFILE_TOGGLE:
+      return {
+        ...state,
+        editing: !state.editing,
       };
     default:
       return state;

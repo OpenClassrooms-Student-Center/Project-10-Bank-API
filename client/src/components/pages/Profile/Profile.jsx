@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserProfile } from "../../../store/user/action.creator";
+import { getUserProfile, editUserProfileToggle } from "../../../store/user/action.creator";
+import EditUser from "./EditProfile";
 
 function Profile() {
   const dispatch = useDispatch();
-  const { loading, error, profile } = useSelector(state => state.user);
-  console.log("profile", profile);
+  const { loading, error, profile, editing } = useSelector(state => state.user);
 
   useEffect(() => {
     dispatch(getUserProfile());
   }, [dispatch]);
 
+  const handleEditUserProfileToggle = () => dispatch(editUserProfileToggle());
+
   if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <main className="main bg-dark">
@@ -21,7 +24,13 @@ function Profile() {
           <br />
           {profile.firstName} {profile.lastName}!
         </h1>
-        <button className="edit-button">Edit Name</button>
+        {editing ? (
+          <EditUser handleEditUserProfileToggle={handleEditUserProfileToggle} />
+        ) : (
+          <button onClick={handleEditUserProfileToggle} className="edit-button">
+            Edit Name
+          </button>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
       <section className="account">

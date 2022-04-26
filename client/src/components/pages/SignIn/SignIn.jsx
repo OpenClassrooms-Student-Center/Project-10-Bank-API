@@ -16,8 +16,6 @@ function SignIn() {
   } = useForm();
   const onSubmit = credentials => dispatch(login(credentials));
 
-  if (error) console.log("login error", error);
-
   useEffect(() => {
     if (authenticated) {
       navigate(ROUTES.PROFILE);
@@ -29,6 +27,7 @@ function SignIn() {
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>

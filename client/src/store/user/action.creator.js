@@ -20,3 +20,9 @@ export const getUserProfile = () => async dispatch => {
     });
   }
 };
+
+export const editUserProfileToggle = () => dispatch => {
+  dispatch({
+    type: actionTypes.EDIT_USER_PROFILE_TOGGLE,
+  });
+};
