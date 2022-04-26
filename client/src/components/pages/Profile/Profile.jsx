@@ -1,20 +1,27 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserProfile, editUserProfileToggle } from "../../../store/user/action.creator";
-import EditUser from "./EditProfile";
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  getProfile,
+  editProfile,
+  saveProfile
+} from '../../../store/user/actions.creator'
+import EditUser from './EditProfile'
 
 function Profile() {
-  const dispatch = useDispatch();
-  const { loading, error, profile, editing } = useSelector(state => state.user);
+  const dispatch = useDispatch()
+  const { loading, error, profile, editing } = useSelector(
+    (state) => state.user
+  )
+
+  const handleEditProfile = () => dispatch(editProfile())
+  const handleSaveProfile = (formData) => dispatch(saveProfile(formData))
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch]);
+    dispatch(getProfile())
+  }, [dispatch])
 
-  const handleEditUserProfileToggle = () => dispatch(editUserProfileToggle());
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>{error}</div>
 
   return (
     <main className="main bg-dark">
@@ -25,9 +32,18 @@ function Profile() {
           {profile.firstName} {profile.lastName}!
         </h1>
         {editing ? (
-          <EditUser handleEditUserProfileToggle={handleEditUserProfileToggle} />
+          <EditUser
+            handleEditProfile={handleEditProfile}
+            handleSaveProfile={handleSaveProfile}
+            firstName={profile.firstName}
+            lastName={profile.lastName}
+          />
         ) : (
-          <button onClick={handleEditUserProfileToggle} className="edit-button">
+          <button
+            type="button"
+            onClick={handleEditProfile}
+            className="edit-button"
+          >
             Edit Name
           </button>
         )}
@@ -40,7 +56,9 @@ function Profile() {
           <p className="account-amount-description">Available Balance</p>
         </div>
         <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
+          <button type="button" className="transaction-button">
+            View transactions
+          </button>
         </div>
       </section>
       <section className="account">
@@ -50,7 +68,9 @@ function Profile() {
           <p className="account-amount-description">Available Balance</p>
         </div>
         <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
+          <button type="button" className="transaction-button">
+            View transactions
+          </button>
         </div>
       </section>
       <section className="account">
@@ -60,11 +80,13 @@ function Profile() {
           <p className="account-amount-description">Current Balance</p>
         </div>
         <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
+          <button type="button" className="transaction-button">
+            View transactions
+          </button>
         </div>
       </section>
     </main>
-  );
+  )
 }
 
-export default Profile;
+export default Profile

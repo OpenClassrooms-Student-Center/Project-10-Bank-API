@@ -1,30 +1,34 @@
-import actionTypes from "./types";
-import { auth, removeToken } from "../../services/auth.service";
+import actionTypes from './types'
+import auth from '../../services/auth.services'
+import { removeToken } from '../../utils/auth.helpers'
 
 export const login =
   ({ email, password }) =>
-  async dispatch => {
+  async (dispatch) => {
+    dispatch({ type: actionTypes.AUTH_REQUEST })
     try {
-      const token = await auth({ email, password });
+      const token = await auth({ email, password })
       dispatch({
-        type: actionTypes.AUTHENTICATED,
-        payload: token,
-      });
+        type: actionTypes.AUTH_SUCCESS,
+        payload: token
+      })
     } catch (error) {
       const message =
-        (error.response && error.response.data && error.response.data.message) ||
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
         error.message ||
-        error.toString();
+        error.toString()
       dispatch({
-        type: actionTypes.NOT_AUTHENTICATED,
-        payload: message,
-      });
+        type: actionTypes.AUTH_FAILURE,
+        payload: message
+      })
     }
-  };
+  }
 
-export const logout = () => async dispatch => {
-  await removeToken();
+export const logout = () => async (dispatch) => {
+  await removeToken()
   dispatch({
-    type: actionTypes.NOT_AUTHENTICATED,
-  });
-};
+    type: actionTypes.AUTH_FAILURE
+  })
+}

@@ -1,12 +1,7 @@
 const actionTypes = Object.freeze({
-  AUTHENTICATED: "AUTHENTICATED",
-  NOT_AUTHENTICATED: "NOT_AUTHENTICATED",
-});
+  AUTH_REQUEST: 'AUTH_REQUEST',
+  AUTH_SUCCESS: 'AUTH_SUCCESS',
+  AUTH_FAILURE: 'AUTH_FAILURE'
+})
 
-export default actionTypes;
-
-/**
- * AUTH_REQUEST
- * AUTH_SUCCESS
- * AUTH_FAILURE
- */
+export default actionTypes

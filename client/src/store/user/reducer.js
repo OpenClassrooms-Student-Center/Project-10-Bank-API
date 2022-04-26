@@ -1,36 +1,63 @@
-import actionTypes from "./types.js";
+import actionTypes from './types'
+import { getProfile } from '../../utils/user.helpers'
 
+const profile = getProfile()
 const initialState = {
-  loading: true,
+  loading: false,
   error: null,
-  profile: null,
-  editing: false,
-};
+  profile: profile ?? null,
+  editing: false
+}
 
-const reducer = (state = initialState, action) => {
-  const { type, payload } = action;
+const reducer = (state = initialState, action = {}) => {
+  const { type, payload } = action
   switch (type) {
-    case actionTypes.GET_USER_PROFILE_SUCCESS:
+    case actionTypes.GET_PROFILE:
       return {
         ...state,
-        error: false,
+        loading: true
+      }
+    case actionTypes.GET_PROFILE_SUCCESS:
+      return {
+        ...state,
         loading: false,
-        profile: payload,
-      };
-    case actionTypes.GET_USER_PROFILE_FAILURE:
+        error: false,
+        profile: payload
+      }
+    case actionTypes.GET_PROFILE_FAILURE:
       return {
         ...state,
+        loading: false,
         error: payload,
-        isLoggedIn: false,
-        profile: null,
-      };
-    case actionTypes.EDIT_USER_PROFILE_TOGGLE:
+        profile: null
+      }
+    case actionTypes.EDIT_PROFILE:
       return {
         ...state,
-        editing: !state.editing,
-      };
+        editing: !state.editing
+      }
+    case actionTypes.UPDATE_PROFILE:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        profile: payload,
+        editing: false
+      }
+    case actionTypes.UPDATE_PROFILE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+        profile: null
+      }
     default:
-      return state;
+      return state
   }
-};
-export default reducer;
+}
+export default reducer
