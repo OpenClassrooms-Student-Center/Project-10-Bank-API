@@ -33,6 +33,14 @@ const reducer = (state = initialState, action = {}) => {
         loading: false,
         error: payload
       }
+    case actionTypes.AUTH_LOGOUT:
+      return {
+        ...state,
+        authenticated: false,
+        token: null,
+        loading: false,
+        error: null
+      }
     default:
       return state
   }

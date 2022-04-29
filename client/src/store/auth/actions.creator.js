@@ -26,9 +26,9 @@ export const login =
     }
   }
 
-export const logout = () => async (dispatch) => {
-  await removeToken()
-  dispatch({
+export const logout = () => {
+  removeToken()
+  return {
     type: actionTypes.AUTH_FAILURE
-  })
+  }
 }

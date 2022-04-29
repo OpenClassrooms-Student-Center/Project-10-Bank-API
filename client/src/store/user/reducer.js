@@ -5,7 +5,7 @@ const profile = getProfile()
 const initialState = {
   loading: false,
   error: null,
-  profile: profile ?? null,
+  profile: profile ?? { firstName: '' },
   editing: false
 }
 
