@@ -6,7 +6,9 @@ import { login } from '../../../features/auth/authSlice'
 import ROUTES from '../../../constants/routes'
 
 function SignIn() {
-  const { token, isLoading, error } = useSelector((state) => state.auth)
+  const { isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  )
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
@@ -17,10 +19,10 @@ function SignIn() {
   const onSubmit = (credentials) => dispatch(login(credentials))
 
   useEffect(() => {
-    if (token) {
+    if (isSuccess) {
       navigate(ROUTES.PROFILE)
     }
-  }, [token, navigate])
+  }, [isSuccess, navigate])
 
   return (
     <main className="main bg-dark">
@@ -28,7 +30,7 @@ function SignIn() {
         <i className="fa fa-user-circle sign-in-icon" />
         <h1>Sign In</h1>
         {isLoading && <p className="loading">Loading...</p>}
-        {error && <p className="error">{error}</p>}
+        {isError && <p className="error">{message}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>

@@ -1,40 +1,38 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import auth from '../../services/auth.services'
+import authService from './authservice'
 
+// Get token from localStorage
+const token = JSON.parse(localStorage.getItem('user'))
+
+const initialState = {
+  token: token || null,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: ''
+}
+
+// Login user
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
-    const previousToken = JSON.parse(localStorage.getItem('token'))
-    if (previousToken) {
-      return previousToken
-    }
     try {
-      const token = await auth(credentials)
-      if (token) {
-        localStorage.setItem('token', JSON.stringify(token))
-      }
-
-      return token
+      return await authService.login(credentials)
     } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong')
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
     }
   }
 )
 
-export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  try {
-    localStorage.clear()
-    return thunkAPI.fulfillWithValue('logged out')
-  } catch (error) {
-    return thunkAPI.rejectWithValue('something went wrong')
-  }
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await authService.logout()
 })
-
-const initialState = {
-  token: null,
-  isLoading: false,
-  error: null
-}
 
 const authSlice = createSlice({
   name: 'auth',
@@ -45,21 +43,19 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.token = action.payload
+      state.isSuccess = true
       state.isLoading = false
     },
     [login.rejected]: (state, action) => {
-      state.error = action.payload
+      state.token = null
+      state.isError = true
       state.isLoading = false
-    },
-    [logout.pending]: (state) => {
-      state.isLoading = true
+      state.message = action.payload
     },
     [logout.fulfilled]: (state) => {
       state.token = null
-      state.isLoading = false
-    },
-    [logout.rejected]: (state, action) => {
-      state.error = action.payload
+      state.isError = false
+      state.isSuccess = false
       state.isLoading = false
     }
   }

@@ -1,46 +1,49 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchProfile, updateProfile } from '../../services/user.services'
+import userService from './userService'
+
+const profile = JSON.parse(localStorage.getItem('profile'))
+const initialState = {
+  profile: profile || { firstName: '' },
+  isEditing: false,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: ''
+}
 
 export const getProfile = createAsyncThunk(
   'user/getProfile',
   async (_, thunkAPI) => {
-    const previousProfile = JSON.parse(localStorage.getItem('profile'))
-    if (previousProfile) {
-      return previousProfile
-    }
     try {
-      const profile = await fetchProfile()
-      if (profile) {
-        localStorage.setItem('profile', JSON.stringify(profile))
-      }
-      return profile
+      return await userService.getProfile()
     } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong')
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
     }
   }
 )
 
-export const saveProfile = createAsyncThunk(
+export const updateProfile = createAsyncThunk(
   'user/saveProfile',
-  async (profile, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      const updatedProfile = await updateProfile(profile)
-      if (updatedProfile) {
-        localStorage.setItem('profile', JSON.stringify(updatedProfile))
-      }
-      return updatedProfile
+      return await userService.updateProfile(formData)
     } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong')
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
     }
   }
 )
-
-const initialState = {
-  profile: { firstName: '' },
-  isEditing: false,
-  isLoading: false,
-  error: null
-}
 
 const userSlice = createSlice({
   name: 'user',
@@ -56,22 +59,26 @@ const userSlice = createSlice({
     },
     [getProfile.fulfilled]: (state, action) => {
       state.profile = action.payload
+      state.isSuccess = true
       state.isLoading = false
     },
     [getProfile.rejected]: (state, action) => {
-      state.error = action.payload
+      state.isError = true
       state.isLoading = false
+      state.message = action.payload
     },
-    [saveProfile.pending]: (state) => {
+    [updateProfile.pending]: (state) => {
       state.isLoading = true
     },
-    [saveProfile.fulfilled]: (state, action) => {
+    [updateProfile.fulfilled]: (state, action) => {
       state.profile = action.payload
+      state.isSuccess = true
       state.isLoading = false
     },
-    [saveProfile.rejected]: (state, action) => {
-      state.error = action.payload
+    [updateProfile.rejected]: (state, action) => {
+      state.isError = true
       state.isLoading = false
+      state.message = action.payload
     }
   }
 })

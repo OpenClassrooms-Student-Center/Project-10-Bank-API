@@ -7,19 +7,38 @@ if (token) {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
-export const fetchProfile = async () => {
+// Get user profile
+const getProfile = async () => {
   const { data } = await axios({
     method: 'post',
     url: `${API_URL}/profile`
   })
+
+  if (data.body) {
+    localStorage.setItem('profile', JSON.stringify(data.body))
+  }
+
   return data.body
 }
 
-export const updateProfile = async (profile) => {
+// Update user profile
+const updateProfile = async (profile) => {
   const { data } = await axios({
     method: 'put',
     url: `${API_URL}/profile`,
     data: profile
   })
+
+  if (data.body) {
+    localStorage.setItem('profile', JSON.stringify(data.body))
+  }
+
   return data.body
 }
+
+const userService = {
+  getProfile,
+  updateProfile
+}
+
+export default userService
