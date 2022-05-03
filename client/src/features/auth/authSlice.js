@@ -45,6 +45,7 @@ const authSlice = createSlice({
       state.token = action.payload
       state.isSuccess = true
       state.isLoading = false
+      state.message = 'Login successful'
     },
     [login.rejected]: (state, action) => {
       state.token = null
