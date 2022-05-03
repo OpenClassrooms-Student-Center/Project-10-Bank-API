@@ -1,29 +1,22 @@
 import axios from 'axios'
-import { getToken } from '../utils/auth.helpers'
 
 const API_URL = 'http://localhost:3001/api/v1/user'
-const token = getToken()
+const token = JSON.parse(localStorage.getItem('token'))
 
 if (token) {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`
 }
 
-export const fetchUser = async (abortController) => {
+export const fetchProfile = async () => {
   const { data } = await axios({
-    signal: abortController.signal,
     method: 'post',
     url: `${API_URL}/profile`
   })
-  if (data) {
-    localStorage.setItem('profile', JSON.stringify(data.body))
-  }
-
   return data.body
 }
 
-export const updateProfile = async (profile, abortController) => {
+export const updateProfile = async (profile) => {
   const { data } = await axios({
-    signal: abortController.signal,
     method: 'put',
     url: `${API_URL}/profile`,
     data: profile

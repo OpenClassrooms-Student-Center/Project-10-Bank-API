@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { login } from '../../../store/auth/actions.creator'
+import { login } from '../../../features/auth/authSlice'
 import ROUTES from '../../../constants/routes'
 
 function SignIn() {
-  const { authenticated, loading, error } = useSelector((state) => state.auth)
+  const { token, isLoading, error } = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
@@ -17,17 +17,17 @@ function SignIn() {
   const onSubmit = (credentials) => dispatch(login(credentials))
 
   useEffect(() => {
-    if (authenticated) {
+    if (token) {
       navigate(ROUTES.PROFILE)
     }
-  }, [authenticated, navigate])
+  }, [token, navigate])
 
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon" />
         <h1>Sign In</h1>
-        {loading && <p className="loading">Loading...</p>}
+        {isLoading && <p className="loading">Loading...</p>}
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">

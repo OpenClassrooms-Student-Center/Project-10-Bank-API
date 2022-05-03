@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import ROUTES from './constants/routes'
 
 function ProtectedRoute({ element }) {
-  const { authenticated } = useSelector((store) => store.auth)
+  const { token } = useSelector((store) => store.auth)
   const location = useLocation()
 
-  return authenticated ? (
+  return token ? (
     element
   ) : (
     <Navigate replace state={{ from: location }} to={ROUTES.HOME} />

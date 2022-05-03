@@ -2,25 +2,25 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   getProfile,
-  editProfile,
-  saveProfile
-} from '../../../store/user/actions.creator'
+  saveProfile,
+  toggleIsEditing
+} from '../../../features/user/userSlice'
 import EditUser from './EditProfile'
 
 function Profile() {
   const dispatch = useDispatch()
-  const { loading, error, profile, editing } = useSelector(
+  const { isLoading, error, profile, isEditing } = useSelector(
     (state) => state.user
   )
 
-  const handleEditProfile = () => dispatch(editProfile())
+  const handleEditProfile = () => dispatch(toggleIsEditing())
   const handleSaveProfile = (formData) => dispatch(saveProfile(formData))
 
   useEffect(() => {
     dispatch(getProfile())
   }, [dispatch])
 
-  if (loading) return <div>Loading...</div>
+  if (isLoading) return <div>Loading...</div>
   if (error) return <div>{error}</div>
 
   return (
@@ -31,7 +31,7 @@ function Profile() {
           <br />
           {profile.firstName} {profile.lastName}!
         </h1>
-        {editing ? (
+        {isEditing ? (
           <EditUser
             handleEditProfile={handleEditProfile}
             handleSaveProfile={handleSaveProfile}

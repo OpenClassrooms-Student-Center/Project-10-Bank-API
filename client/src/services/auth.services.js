@@ -8,9 +8,6 @@ const auth = async ({ email, password }) => {
     url: `${API_URL}login`,
     data: { email, password }
   })
-  if (response.data) {
-    localStorage.setItem('token', JSON.stringify(response.data.body.token))
-  }
   return response.data.body.token
 }
 
