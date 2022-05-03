@@ -31,6 +31,7 @@ function SignIn() {
         <h1>Sign In</h1>
         {isLoading && <p className="loading">Loading...</p>}
         {isError && <p className="error">{message}</p>}
+        {isSuccess && <p className="success">{message}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>
