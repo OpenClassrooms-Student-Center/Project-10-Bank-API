@@ -2,12 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import userService from './userService'
 
 const profile = JSON.parse(localStorage.getItem('profile'))
+
 const initialState = {
   profile: profile || { firstName: '' },
   isEditing: false,
-  isError: false,
-  isSuccess: false,
   isLoading: false,
+  isError: false,
   message: ''
 }
 
@@ -59,12 +59,12 @@ const userSlice = createSlice({
     },
     [getProfile.fulfilled]: (state, action) => {
       state.profile = action.payload
-      state.isSuccess = true
       state.isLoading = false
+      state.isError = false
     },
     [getProfile.rejected]: (state, action) => {
-      state.isError = true
       state.isLoading = false
+      state.isError = true
       state.message = action.payload
     },
     [updateProfile.pending]: (state) => {
@@ -72,12 +72,12 @@ const userSlice = createSlice({
     },
     [updateProfile.fulfilled]: (state, action) => {
       state.profile = action.payload
-      state.isSuccess = true
       state.isLoading = false
+      state.isError = false
     },
     [updateProfile.rejected]: (state, action) => {
-      state.isError = true
       state.isLoading = false
+      state.isError = true
       state.message = action.payload
     }
   }

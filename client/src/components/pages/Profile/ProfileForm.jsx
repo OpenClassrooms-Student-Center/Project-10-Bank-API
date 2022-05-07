@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useForm } from 'react-hook-form'
 
-function EditUser({
+function ProfileForm({
   handleEditProfile,
   handleSaveProfile,
   firstName,
@@ -49,9 +49,9 @@ function EditUser({
   )
 }
 
-export default EditUser
+export default ProfileForm
 
-EditUser.propTypes = {
+ProfileForm.propTypes = {
   handleEditProfile: PropTypes.func.isRequired,
   handleSaveProfile: PropTypes.func.isRequired,
   firstName: PropTypes.string.isRequired,

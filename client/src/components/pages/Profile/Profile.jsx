@@ -5,11 +5,11 @@ import {
   updateProfile,
   toggleIsEditing
 } from '../../../features/user/userSlice'
-import EditUser from './EditProfile'
+import ProfileForm from './ProfileForm'
 
 function Profile() {
   const dispatch = useDispatch()
-  const { profile, isEditing, isError, isLoading, message } = useSelector(
+  const { profile, isEditing, isLoading, isError, message } = useSelector(
     (state) => state.user
   )
 
@@ -32,7 +32,7 @@ function Profile() {
           {profile.firstName} {profile.lastName}!
         </h1>
         {isEditing ? (
-          <EditUser
+          <ProfileForm
             handleEditProfile={handleEditProfile}
             handleSaveProfile={handleSaveProfile}
             firstName={profile.firstName}
