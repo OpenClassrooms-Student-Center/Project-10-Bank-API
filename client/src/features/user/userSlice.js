@@ -58,7 +58,7 @@ const userSlice = createSlice({
       state.isLoading = true
     },
     [getProfile.fulfilled]: (state, action) => {
-      state.profile = action.payload
+      state.profile = action.payload.data.body
       state.isLoading = false
       state.isError = false
     },
@@ -71,7 +71,7 @@ const userSlice = createSlice({
       state.isLoading = true
     },
     [updateProfile.fulfilled]: (state, action) => {
-      state.profile = action.payload
+      state.profile = action.payload.data.body
       state.isLoading = false
       state.isError = false
     },
