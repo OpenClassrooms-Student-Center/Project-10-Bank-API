@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  getProfile,
   updateProfile,
   toggleIsEditing
 } from '../../../features/user/userSlice'
@@ -15,10 +13,6 @@ function Profile() {
 
   const handleEditProfile = () => dispatch(toggleIsEditing())
   const handleSaveProfile = (formData) => dispatch(updateProfile(formData))
-
-  useEffect(() => {
-    dispatch(getProfile())
-  }, [dispatch])
 
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>{message}</div>

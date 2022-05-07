@@ -1,5 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { getProfile } from './features/user/userSlice'
 import MainNav from './components/ui/MainNav/MainNav'
 import Footer from './components/ui/Footer/Footer'
 import ProtectedRoute from './ProtectedRoutes'
@@ -10,6 +12,15 @@ const SignIn = lazy(() => import('./components/pages/SignIn/SignIn'))
 const Profile = lazy(() => import('./components/pages/Profile/Profile'))
 
 function App() {
+  const { token } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getProfile())
+    }
+  }, [token, dispatch])
+
   return (
     <div className="App">
       <MainNav />

@@ -5,6 +5,7 @@ import ROUTES from '../../../constants/routes'
 import argentLogo from '../../../assets/img/argentBankLogo.png'
 
 function MainNav() {
+  const { token } = useSelector((state) => state.auth)
   const { firstName } = useSelector((state) => state.user.profile)
   const dispatch = useDispatch()
 
@@ -23,7 +24,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {firstName ? (
+        {token ? (
           <>
             <Link to={ROUTES.PROFILE} className="main-nav-item">
               <i className="fa fa-user-circle" aria-hidden="true" />

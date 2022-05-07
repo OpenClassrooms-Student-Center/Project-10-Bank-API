@@ -1,12 +1,10 @@
-import axios from 'axios'
-
-const API_URL = 'http://localhost:3001/api/v1/user/'
+import api from '../../services/api'
 
 // Login User
 const login = async ({ email, password }) => {
-  const response = await axios({
+  const response = await api({
     method: 'post',
-    url: `${API_URL}login`,
+    url: 'login',
     data: { email, password }
   })
 
@@ -19,7 +17,7 @@ const login = async ({ email, password }) => {
 
 // Logout user
 const logout = () => {
-  localStorage.clear()
+  localStorage.removeItem('token')
 }
 
 const authService = {
