@@ -1,4 +1,5 @@
 import axios from 'axios'
+import authHelpers from '../helpers/authHelpers'
 
 const API_URL = 'http://localhost:3001/api/v1/user'
 
@@ -10,15 +11,15 @@ const API = () => {
   const instance = axios.create(defaultOption)
 
   instance.interceptors.request.use((config) => {
-    /* eslint no-param-reassign: "error" */
-    const token = JSON.parse(localStorage.getItem('token'))
+    const newConfig = config
+    const token = authHelpers.getToken()
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      newConfig.headers.Authorization = `Bearer ${token}`
     } else {
-      delete config.headers.Authorization
+      delete newConfig.headers.Authorization
     }
 
-    return config
+    return newConfig
   })
 
   return instance

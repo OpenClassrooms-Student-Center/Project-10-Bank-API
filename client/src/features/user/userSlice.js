@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import userService from './userService'
-
-const profile = JSON.parse(localStorage.getItem('profile'))
+import userHelpers from '../../helpers/userHelpers'
 
 const initialState = {
   isLoading: false,
   isError: false,
-  profile: profile || { firstName: '' },
+  profile: userHelpers.getProfile() || { firstName: '' },
   isEditing: false,
   message: ''
 }
@@ -50,6 +49,7 @@ const userSlice = createSlice({
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false
       state.profile = payload.data.body
+      userHelpers.setProfile(payload.data.body)
     })
     builder.addCase(getProfile.rejected, (state, { payload }) => {
       state.isLoading = false
@@ -63,6 +63,7 @@ const userSlice = createSlice({
       state.isLoading = false
       state.profile = payload.data.body
       state.isEditing = false
+      userHelpers.setProfile(payload.data.body)
     })
     builder.addCase(updateProfile.rejected, (state, { payload }) => {
       state.isLoading = false
