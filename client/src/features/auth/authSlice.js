@@ -5,8 +5,8 @@ import authService from './authservice'
 const token = JSON.parse(localStorage.getItem('token'))
 
 const initialState = {
-  token: token || null,
   isLoading: false,
+  token: token || null,
   message: ''
 }
 
@@ -17,44 +17,39 @@ export const login = createAsyncThunk(
     try {
       return await authService.login(credentials)
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const { message } = error.response.data
       return thunkAPI.rejectWithValue(message)
     }
   }
 )
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await authService.logout()
-})
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [login.pending]: (state) => {
-      state.isLoading = true
-    },
-    [login.fulfilled]: (state, action) => {
-      state.token = action.payload
+  reducers: {
+    logout: (state) => {
       state.isLoading = false
-      state.message = 'Login successful'
-    },
-    [login.rejected]: (state, action) => {
       state.token = null
-      state.isLoading = false
-      state.message = action.payload
-    },
-    [logout.fulfilled]: (state) => {
-      state.token = null
-      state.isLoading = false
+      localStorage.removeItem('token')
       state.message = 'Logout successful'
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(login.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(login.fulfilled, (state, { payload }) => {
+      state.isLoading = false
+      state.token = payload
+      localStorage.setItem('token', JSON.stringify(state.token))
+      state.message = 'Login successful'
+    })
+    builder.addCase(login.rejected, (state, { payload }) => {
+      state.isLoading = false
+      state.message = payload
+    })
   }
 })
 
 export default authSlice.reducer
+export const { logout } = authSlice.actions

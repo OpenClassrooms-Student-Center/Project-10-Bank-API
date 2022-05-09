@@ -4,10 +4,10 @@ import userService from './userService'
 const profile = JSON.parse(localStorage.getItem('profile'))
 
 const initialState = {
-  profile: profile || { firstName: '' },
-  isEditing: false,
   isLoading: false,
   isError: false,
+  profile: profile || { firstName: '' },
+  isEditing: false,
   message: ''
 }
 
@@ -17,12 +17,7 @@ export const getProfile = createAsyncThunk(
     try {
       return await userService.getProfile()
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const { message } = error.response.data
       return thunkAPI.rejectWithValue(message)
     }
   }
@@ -34,12 +29,7 @@ export const updateProfile = createAsyncThunk(
     try {
       return await userService.updateProfile(formData)
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const { message } = error.response.data
       return thunkAPI.rejectWithValue(message)
     }
   }
@@ -53,33 +43,32 @@ const userSlice = createSlice({
       state.isEditing = !state.isEditing
     }
   },
-  extraReducers: {
-    [getProfile.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getProfile.pending, (state) => {
       state.isLoading = true
-    },
-    [getProfile.fulfilled]: (state, action) => {
-      state.profile = action.payload.data.body
+    })
+    builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.isError = false
-    },
-    [getProfile.rejected]: (state, action) => {
+      state.profile = payload.data.body
+    })
+    builder.addCase(getProfile.rejected, (state, { payload }) => {
       state.isLoading = false
       state.isError = true
-      state.message = action.payload
-    },
-    [updateProfile.pending]: (state) => {
+      state.message = payload
+    })
+    builder.addCase(updateProfile.pending, (state) => {
       state.isLoading = true
-    },
-    [updateProfile.fulfilled]: (state, action) => {
-      state.profile = action.payload.data.body
+    })
+    builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.isError = false
-    },
-    [updateProfile.rejected]: (state, action) => {
+      state.profile = payload.data.body
+      state.isEditing = false
+    })
+    builder.addCase(updateProfile.rejected, (state, { payload }) => {
       state.isLoading = false
       state.isError = true
-      state.message = action.payload
-    }
+      state.message = payload
+    })
   }
 })
 

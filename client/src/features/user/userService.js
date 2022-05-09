@@ -1,19 +1,17 @@
-import api from '../../services/api'
-
-const API_URL = 'http://localhost:3001/api/v1/user'
+import API from '../../services/api'
 
 // Get user profile
 const getProfile = async () =>
-  api({
+  API({
     method: 'post',
-    url: `/profile`
+    url: `profile`
   })
 
 // Update user profile
 const updateProfile = async (profile) =>
-  api({
+  API({
     method: 'put',
-    url: `${API_URL}/profile`,
+    url: 'profile',
     data: profile
   })
 
