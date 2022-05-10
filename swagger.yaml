@@ -139,8 +139,8 @@ paths:
         - Bearer: []
       tags:
         - User Module
-      summary: User transaction API
-      description: API for updating a user transaction
+      summary: User transactions API
+      description: API for updating a user transaction details
       parameters:
         - in: header
           name: Authorization
@@ -148,7 +148,7 @@ paths:
           required: true
         - in: body
           name: body
-          description: Update transaction attributes
+          description: Update transaction details
           required: true
           schema:
             $ref: "#/definitions/UserTransactionUpdate"
@@ -156,7 +156,7 @@ paths:
         - application/json
       responses:
         "200":
-          description: Transaction retrieved successully
+          description: Transaction details updated successully
           schema:
             $ref: "#/definitions/UserTransactionUpdateResponse"
         "400":
