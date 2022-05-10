@@ -129,7 +129,7 @@ paths:
         "200":
           description: User transactions retrieved successully
           schema:
-            $ref: "#/definitions/UserTransactions"
+            $ref: "#/definitions/UserTransactionsResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -158,7 +158,7 @@ paths:
         "200":
           description: Transaction retrieved successully
           schema:
-            $ref: "#/definitions/UserTransactions"
+            $ref: "#/definitions/UserTransactionUpdateResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -217,7 +217,7 @@ definitions:
         type: string
       lastName:
         type: string
-  UserTransactions:
+  UserTransactionsResponse:
     type: object
     properties:
       status:
@@ -232,7 +232,7 @@ definitions:
             id:
               type: string
             date:
-              type: object
+              type: string
             description:
               type: string
             amount:
@@ -250,6 +250,23 @@ definitions:
     properties:
       id:
         type: string
+      category:
+        type: string
+      notes:
+        type: string
+  UserTransactionUpdateResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: integer
+      balance:
+        type: integer
       type:
         type: string
       category:
