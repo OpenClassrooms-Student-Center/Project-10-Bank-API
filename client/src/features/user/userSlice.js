@@ -40,6 +40,11 @@ const userSlice = createSlice({
   reducers: {
     toggleIsEditing: (state) => {
       state.isEditing = !state.isEditing
+    },
+    logout: (state) => {
+      state.isLoading = false
+      state.isError = false
+      state.profile = { firstName: '' }
     }
   },
   extraReducers: (builder) => {
@@ -48,8 +53,8 @@ const userSlice = createSlice({
     })
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.profile = payload.data.body
-      userHelpers.setProfile(payload.data.body)
+      state.profile = payload
+      userHelpers.setProfile(payload)
     })
     builder.addCase(getProfile.rejected, (state, { payload }) => {
       state.isLoading = false
@@ -61,9 +66,9 @@ const userSlice = createSlice({
     })
     builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.profile = payload.data.body
+      state.profile = payload
       state.isEditing = false
-      userHelpers.setProfile(payload.data.body)
+      userHelpers.setProfile(payload)
     })
     builder.addCase(updateProfile.rejected, (state, { payload }) => {
       state.isLoading = false
@@ -74,4 +79,4 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
-export const { toggleIsEditing } = userSlice.actions
+export const { toggleIsEditing, logout } = userSlice.actions

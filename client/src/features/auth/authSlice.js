@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { logout } from '../user/userSlice'
 import authService from './authservice'
 import authHelpers from '../../helpers/authHelpers'
 import userHelpers from '../../helpers/userHelpers'
@@ -25,15 +26,6 @@ export const login = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.isLoading = false
-      state.token = null
-      state.message = 'Logout successful'
-      authHelpers.removeToken()
-      userHelpers.removeProfile()
-    }
-  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.isLoading = true
@@ -48,8 +40,14 @@ const authSlice = createSlice({
       state.isLoading = false
       state.message = payload
     })
+    builder.addCase(logout, (state) => {
+      state.isLoading = false
+      state.token = null
+      state.message = 'Logout successful'
+      authHelpers.removeToken()
+      userHelpers.removeProfile()
+    })
   }
 })
 
 export default authSlice.reducer
-export const { logout } = authSlice.actions
