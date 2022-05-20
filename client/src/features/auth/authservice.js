@@ -1,7 +1,7 @@
 import API from '../../services/api'
 
 // Login User
-const login = async ({ email, password, rememberMe }) => {
+const login = async ({ email, password }) => {
   const response = await API({
     method: 'post',
     url: 'login',
@@ -9,7 +9,7 @@ const login = async ({ email, password, rememberMe }) => {
   })
 
   const { token } = response.data.body
-  return { token, rememberMe }
+  return token
 }
 
 const authService = {
