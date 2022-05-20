@@ -9,7 +9,7 @@ function SignInForm() {
     handleSubmit,
     formState: { errors }
   } = useForm()
-  const onSubmit = (credentials) => dispatch(login(credentials))
+  const onSubmit = (formData) => dispatch(login(formData))
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

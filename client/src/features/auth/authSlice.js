@@ -6,16 +6,17 @@ import userHelpers from '../../helpers/userHelpers'
 
 const initialState = {
   isLoading: false,
-  token: authHelpers.getToken() || null,
+  token: authHelpers().getToken() || null,
+  rememberMe: false,
   message: ''
 }
 
 // Login user
 export const login = createAsyncThunk(
   'auth/login',
-  async (credentials, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await authService.login(credentials)
+      return await authService.login(formData)
     } catch (error) {
       const { message } = error.response.data
       return thunkAPI.rejectWithValue(message)
@@ -32,9 +33,11 @@ const authSlice = createSlice({
     })
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.token = payload
+      state.token = payload.token
+      state.rememberMe = payload.rememberMe
       state.message = 'Login successful'
-      authHelpers.setToken(payload)
+      const storage = payload.rememberMe ? localStorage : sessionStorage
+      authHelpers(storage).setToken(payload.token)
     })
     builder.addCase(login.rejected, (state, { payload }) => {
       state.isLoading = false
@@ -44,7 +47,7 @@ const authSlice = createSlice({
       state.isLoading = false
       state.token = null
       state.message = 'Logout successful'
-      authHelpers.removeToken()
+      authHelpers().removeToken()
       userHelpers.removeProfile()
     })
   }

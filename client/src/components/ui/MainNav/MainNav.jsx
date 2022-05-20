@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../../features/user/userSlice'
 import ROUTES from '../../../constants/routes'
+import { selectAuth } from '../../../helpers/selectors'
 import argentLogo from '../../../assets/img/argentBankLogo.png'
 
 function MainNav() {
-  const { token } = useSelector((state) => state.auth)
+  const { token } = useSelector(selectAuth)
   const { firstName } = useSelector((state) => state.user.profile)
   const dispatch = useDispatch()
 

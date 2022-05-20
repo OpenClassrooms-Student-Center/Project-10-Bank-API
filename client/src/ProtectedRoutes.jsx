@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux'
 import { useLocation, Navigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { selectAuth } from './helpers/selectors'
 import ROUTES from './constants/routes'
 
 function ProtectedRoute({ element }) {
-  const { token } = useSelector((store) => store.auth)
+  const { token } = useSelector(selectAuth)
   const location = useLocation()
 
   return token ? (

@@ -12,7 +12,7 @@ const API = () => {
 
   instance.interceptors.request.use((config) => {
     const newConfig = config
-    const token = authHelpers.getToken()
+    const token = authHelpers().getToken()
     if (token) {
       newConfig.headers.Authorization = `Bearer ${token}`
     } else {

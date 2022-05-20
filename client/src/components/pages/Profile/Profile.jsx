@@ -4,12 +4,12 @@ import {
   toggleIsEditing
 } from '../../../features/user/userSlice'
 import ProfileForm from './ProfileForm'
+import { selectUser } from '../../../helpers/selectors'
 
 function Profile() {
   const dispatch = useDispatch()
-  const { profile, isEditing, isLoading, isError, message } = useSelector(
-    (state) => state.user
-  )
+  const { profile, isEditing, isLoading, isError, message } =
+    useSelector(selectUser)
 
   const handleEditProfile = () => dispatch(toggleIsEditing())
   const handleSaveProfile = (formData) => dispatch(updateProfile(formData))

@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ROUTES from '../../../constants/routes'
 import SignInForm from './SignInForm'
+import { selectAuth } from '../../../helpers/selectors'
 
 function SignIn() {
-  const { token, isLoading, message } = useSelector((state) => state.auth)
+  const { token, isLoading, message } = useSelector(selectAuth)
   const navigate = useNavigate()
 
   useEffect(() => {

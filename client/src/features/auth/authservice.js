@@ -1,14 +1,15 @@
 import API from '../../services/api'
 
 // Login User
-const login = async ({ email, password }) => {
+const login = async ({ email, password, rememberMe }) => {
   const response = await API({
     method: 'post',
     url: 'login',
     data: { email, password }
   })
 
-  return response.data.body.token
+  const { token } = response.data.body
+  return { token, rememberMe }
 }
 
 const authService = {
