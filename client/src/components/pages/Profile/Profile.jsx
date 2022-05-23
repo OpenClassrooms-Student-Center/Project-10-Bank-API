@@ -4,7 +4,7 @@ import {
   toggleIsEditing
 } from '../../../features/user/userSlice'
 import ProfileForm from './ProfileForm'
-import { selectUser } from '../../../helpers/selectors'
+import { selectUser } from '../../../utils/selectors'
 
 function Profile() {
   const dispatch = useDispatch()

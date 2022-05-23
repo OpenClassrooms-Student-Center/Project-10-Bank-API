@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ROUTES from '../../../constants/routes'
 import SignInForm from './SignInForm'
-import { selectAuth } from '../../../helpers/selectors'
+import { selectAuth } from '../../../utils/selectors'
 
 function SignIn() {
-  const { token, isLoading, message } = useSelector(selectAuth)
+  const { isAuth, isLoading, message } = useSelector(selectAuth)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (token) {
+    if (isAuth) {
       navigate(ROUTES.PROFILE)
     }
-  }, [token, navigate])
+  }, [isAuth, navigate])
 
   return (
     <main className="main bg-dark">

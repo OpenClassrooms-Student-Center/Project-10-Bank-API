@@ -1,5 +1,5 @@
 import axios from 'axios'
-import authHelpers from '../helpers/authHelpers'
+import authHelpers from '../utils/authHelpers'
 
 const API_URL = 'http://localhost:3001/api/v1/user'
 

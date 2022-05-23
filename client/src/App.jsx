@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProfile } from './features/user/userSlice'
+import { selectIsAuth } from './utils/selectors'
 import MainNav from './components/ui/MainNav/MainNav'
 import Footer from './components/ui/Footer/Footer'
 import ProtectedRoute from './ProtectedRoutes'
@@ -12,14 +13,14 @@ const SignIn = lazy(() => import('./components/pages/SignIn/SignIn'))
 const Profile = lazy(() => import('./components/pages/Profile/Profile'))
 
 function App() {
-  const { token } = useSelector((state) => state.auth)
+  const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (token) {
+    if (isAuth) {
       dispatch(getProfile())
     }
-  }, [token, dispatch])
+  }, [isAuth, dispatch])
 
   return (
     <div className="App">

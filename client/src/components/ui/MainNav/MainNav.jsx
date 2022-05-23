@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../../../features/user/userSlice'
+import { logout } from '../../../features/auth/authSlice'
+
 import ROUTES from '../../../constants/routes'
-import { selectAuth } from '../../../helpers/selectors'
+import { selectIsAuth, selectFirstName } from '../../../utils/selectors'
 import argentLogo from '../../../assets/img/argentBankLogo.png'
 
 function MainNav() {
-  const { token } = useSelector(selectAuth)
-  const { firstName } = useSelector((state) => state.user.profile)
+  const isAuth = useSelector(selectIsAuth)
+  const firstName = useSelector(selectFirstName)
   const dispatch = useDispatch()
 
   const handleSignOut = () => {
@@ -25,7 +26,7 @@ function MainNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {token ? (
+        {isAuth ? (
           <>
             <Link to={ROUTES.PROFILE} className="main-nav-item">
               <i className="fa fa-user-circle" aria-hidden="true" />

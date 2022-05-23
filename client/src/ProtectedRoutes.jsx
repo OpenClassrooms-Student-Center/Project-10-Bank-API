@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux'
 import { useLocation, Navigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { selectAuth } from './helpers/selectors'
+import { selectIsAuth } from './utils/selectors'
 import ROUTES from './constants/routes'
 
 function ProtectedRoute({ element }) {
-  const { token } = useSelector(selectAuth)
+  const isAuth = useSelector(selectIsAuth)
   const location = useLocation()
 
-  return token ? (
+  return isAuth ? (
     element
   ) : (
     <Navigate replace state={{ from: location }} to={ROUTES.HOME} />

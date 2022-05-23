@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { logout } from '../user/userSlice'
 import authService from './authservice'
-import authHelpers from '../../helpers/authHelpers'
-import userHelpers from '../../helpers/userHelpers'
+import authHelpers from '../../utils/authHelpers'
 
 const initialState = {
   isLoading: false,
-  token: authHelpers().getToken() || null,
+  isAuth: !!authHelpers().getToken(),
   message: ''
 }
 
@@ -28,13 +26,21 @@ export const login = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    logout: (state) => {
+      state.isLoading = false
+      state.isAuth = false
+      state.message = 'Logout successful'
+      authHelpers().removeToken()
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.isLoading = true
     })
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false
-      state.token = payload.token
+      state.isAuth = true
       state.message = 'Login successful'
       const storage = payload.rememberMe ? localStorage : sessionStorage
       authHelpers(storage).setToken(payload.token)
@@ -43,14 +49,8 @@ const authSlice = createSlice({
       state.isLoading = false
       state.message = payload
     })
-    builder.addCase(logout, (state) => {
-      state.isLoading = false
-      state.token = null
-      state.message = 'Logout successful'
-      authHelpers().removeToken()
-      userHelpers.removeProfile()
-    })
   }
 })
 
 export default authSlice.reducer
+export const { logout } = authSlice.actions
