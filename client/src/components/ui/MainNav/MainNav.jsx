@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../../features/auth/authSlice'
 
 import ROUTES from '../../../constants/routes'
-import { selectIsAuth, selectFirstName } from '../../../utils/selectors'
+import { selectIsAuth, selectProfile } from '../../../utils/selectors'
 import argentLogo from '../../../assets/img/argentBankLogo.png'
 
 function MainNav() {
   const isAuth = useSelector(selectIsAuth)
-  const firstName = useSelector(selectFirstName)
+  const { firstName } = useSelector(selectProfile)
   const dispatch = useDispatch()
 
   const handleSignOut = () => {

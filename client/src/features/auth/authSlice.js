@@ -5,6 +5,7 @@ import authHelpers from '../../utils/authHelpers'
 const initialState = {
   isLoading: false,
   isAuth: !!authHelpers().getToken(),
+  rememberMe: false,
   message: ''
 }
 
@@ -41,8 +42,9 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false
       state.isAuth = true
+      state.rememberMe = payload.rememberMe
       state.message = 'Login successful'
-      const storage = payload.rememberMe ? localStorage : sessionStorage
+      const storage = state.rememberMe ? localStorage : sessionStorage
       authHelpers(storage).setToken(payload.token)
     })
     builder.addCase(login.rejected, (state, { payload }) => {
