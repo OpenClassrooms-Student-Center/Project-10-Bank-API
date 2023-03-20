@@ -91,7 +91,6 @@ paths:
       description: API for updating a user profile
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -112,7 +111,31 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /store/transactions:
+  /account:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: User Accounts API
+      description: Get all accounts
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Accounts fetched successully
+          schema:
+            $ref: '#/definitions/Accounts'
+        '400':
+          description: Invalid adress
+        '500':
+          description: Internal Server Error
+  /account/:accountnumber/transactions:
     get:
       security:
         - Bearer: []
@@ -122,10 +145,15 @@ paths:
       description: get all transactions
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+        - in: body
+          name: body
+          description: Update transaction category attribute
+          required: true
+          schema:
+            $ref: '#/definitions/AccountNumber'
       produces:
         - application/json
       responses:
@@ -137,7 +165,7 @@ paths:
           description: Invalid adress
         '500':
           description: Internal Server Error
-  /store/transactions/:month:
+  /account/:accountnumber/transactions/:month:
     get:
       security:
         - Bearer: []
@@ -147,10 +175,15 @@ paths:
       description: get all transactions from a specific month
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+        - in: body
+          name: body
+          description: Update transaction category attribute
+          required: true
+          schema:
+            $ref: '#/definitions/AccountNumber'
       produces:
         - application/json
       responses:
@@ -162,7 +195,7 @@ paths:
           description: Invalid adress
         '500':
           description: Internal Server Error
-  /store/transactions/:id/category:
+  /account/transactions/:id/category:
     put:
       security:
         - Bearer: []
@@ -172,7 +205,6 @@ paths:
       description: API for editing category in transaction
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -193,7 +225,7 @@ paths:
           description: Invalid Category
         '500':
           description: Internal Server Error
-  /store/transactions/:id/note:
+  /account/transactions/:id/note:
     post:
       security:
         - Bearer: []
@@ -203,7 +235,6 @@ paths:
       description: API for adding note in transaction
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -233,7 +264,6 @@ paths:
       description: API for deleting note in transaction
       parameters:
         - in: header
-          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -319,6 +349,22 @@ definitions:
         type: string
       lastName:
         type: string
+  Accounts:
+    type: array
+    items:
+      properties:
+        id:
+          type: number
+          description: id of user
+        accountNumber: 
+          type: number
+          description: id of account  
+        accountName:
+          type: string
+          description: accounts names
+        balance:
+          type: number
+          description: balance on account
   Transaction:
     type: array
     items:
@@ -357,3 +403,8 @@ definitions:
     properties:
       note:
         type: string
+  AccountNumber:
+    type: object
+    properties:
+      accountNumber:
+        type: number
