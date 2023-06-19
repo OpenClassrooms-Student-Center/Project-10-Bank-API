@@ -4,11 +4,13 @@ import { url } from '../libs/api.ts'
 export interface AuthState {
   token: string | null
   error: string | null
+  remember: boolean
 }
 
 const initialState: AuthState = {
-  token: null,
+  token: sessionStorage.getItem('token') || localStorage.getItem('token'),
   error: null,
+  remember: false,
 }
 
 export const login = createAsyncThunk<
@@ -33,11 +35,21 @@ export const login = createAsyncThunk<
     })
 
     const data = await response.json()
-    console.log(data.message)
-    const { token } = data.body
-    const error = data.message
 
-    return token ?? rejectWithValue(error)
+    if (response.ok) {
+      const { token } = data.body
+
+      if (credentials.remember) {
+        localStorage.setItem('token', token)
+      }
+      sessionStorage.setItem('token', token)
+
+      return token
+    }
+
+    const error = data.message as string
+
+    return rejectWithValue(error)
   }
 )
 
@@ -47,6 +59,7 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       state.token = null
       state.error = null
     },
@@ -59,7 +72,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.token = null
-        state.error = action.payload || "Une erreur s'est produite"
+        state.error = (action.payload as string) ?? "Une erreur s'est produite"
       })
   },
 })

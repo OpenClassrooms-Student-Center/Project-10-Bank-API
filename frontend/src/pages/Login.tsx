@@ -4,7 +4,6 @@ import { ThunkDispatch } from 'redux-thunk'
 import { login } from '../auth/authActions.ts'
 import { useNavigate } from 'react-router'
 import { getError, getToken } from '../auth/authSelectors.ts'
-import { RootState } from '../auth/authStore.ts'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
@@ -15,17 +14,16 @@ export const Login = () => {
   const token = useSelector(getToken)
   const error = useSelector(getError)
 
-  console.log({ error, token, remember })
-
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
 
-    const user = {
+    const credentials = {
       email: username,
       password,
+      remember: remember,
     }
 
-    dispatch(login(user, remember))
+    dispatch(login(credentials))
   }
 
   useEffect(() => {
