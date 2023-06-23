@@ -1,9 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { login } from '../auth/authActions.ts'
+import { checkToken, login } from '../auth/authActions.ts'
 import { useNavigate } from 'react-router'
-import { getError, getToken } from '../auth/authSelectors.ts'
+import { getError, getToken, isLoading } from '../auth/authSelectors.ts'
+import { Loader } from '../ui/Loader.tsx'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
@@ -13,6 +14,16 @@ export const Login = () => {
   const navigate = useNavigate()
   const token = useSelector(getToken)
   const error = useSelector(getError)
+  const loading = useSelector(isLoading)
+
+  useEffect(() => {
+    dispatch(checkToken())
+  }, [])
+
+  console.log('loading', loading)
+  if (loading) {
+    return <Loader />
+  }
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()

@@ -5,13 +5,27 @@ export interface AuthState {
   token: string | null
   error: string | null
   remember: boolean
+  isLoading: boolean
 }
 
 const initialState: AuthState = {
-  token: sessionStorage.getItem('token') || localStorage.getItem('token'),
+  token: null,
   error: null,
   remember: false,
+  isLoading: false,
 }
+
+export const checkToken = createAsyncThunk('token', async (_, { dispatch }) => {
+  dispatch(setLoading(true))
+  if (!(sessionStorage.getItem('token') || localStorage.getItem('token'))) {
+    dispatch(setLoading(false))
+    return null
+  }
+
+  dispatch(setLoading(false))
+
+  return sessionStorage.getItem('token') || localStorage.getItem('token')
+})
 
 export const login = createAsyncThunk<
   string,
@@ -63,6 +77,10 @@ const authSlice = createSlice({
       state.token = null
       state.error = null
     },
+    setLoading(state, action) {
+      console.log('payload', action.payload)
+      state.isLoading = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -74,8 +92,12 @@ const authSlice = createSlice({
         state.token = null
         state.error = (action.payload as string) ?? "Une erreur s'est produite"
       })
+      .addCase(checkToken.fulfilled, (state, action) => {
+        state.token = action.payload
+        state.error = null
+      })
   },
 })
 
-export const { logout } = authSlice.actions
+export const { logout, setLoading } = authSlice.actions
 export const authReducer = authSlice.reducer

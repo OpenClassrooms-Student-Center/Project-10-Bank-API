@@ -1,17 +1,22 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { getToken } from '../auth/authSelectors.ts'
+import { getToken, isLoading } from '../auth/authSelectors.ts'
 import { useEffect } from 'react'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const token = useSelector(getToken)
+  const loading = useSelector(isLoading)
 
   useEffect(() => {
     if (!token) {
       navigate('/')
     }
   }, [token, navigate])
+
+  if (!token) {
+    return <p>Loading...</p>
+  }
 
   return (
     <>
