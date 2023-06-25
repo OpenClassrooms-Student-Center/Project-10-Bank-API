@@ -15,18 +15,6 @@ const initialState: AuthState = {
   isLoading: false,
 }
 
-export const checkToken = createAsyncThunk('token', async (_, { dispatch }) => {
-  dispatch(setLoading(true))
-  if (!(sessionStorage.getItem('token') || localStorage.getItem('token'))) {
-    dispatch(setLoading(false))
-    return null
-  }
-
-  dispatch(setLoading(false))
-
-  return sessionStorage.getItem('token') || localStorage.getItem('token')
-})
-
 export const login = createAsyncThunk<
   string,
   { email: string; password: string; remember: boolean }
@@ -36,7 +24,7 @@ export const login = createAsyncThunk<
     credentials: { email: string; password: string; remember: boolean },
     { rejectWithValue }
   ) => {
-    const response = await fetch(`${url}/login`, {
+    const response = await fetch(`${url}user/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -77,13 +65,24 @@ const authSlice = createSlice({
       state.token = null
       state.error = null
     },
-    setLoading(state, action) {
-      console.log('payload', action.payload)
-      state.isLoading = action.payload
+    checkToken(state) {
+      state.isLoading = true
+      if (!(sessionStorage.getItem('token') || localStorage.getItem('token'))) {
+        state.token = null
+        console.log('!token')
+        state.isLoading = false
+      }
+
+      state.token =
+        sessionStorage.getItem('token') || localStorage.getItem('token')
+      state.isLoading = false
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(login.pending, (state, action) => {
+        state.isLoading = true
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload
         state.error = null
@@ -92,12 +91,8 @@ const authSlice = createSlice({
         state.token = null
         state.error = (action.payload as string) ?? "Une erreur s'est produite"
       })
-      .addCase(checkToken.fulfilled, (state, action) => {
-        state.token = action.payload
-        state.error = null
-      })
   },
 })
 
-export const { logout, setLoading } = authSlice.actions
+export const { logout, checkToken } = authSlice.actions
 export const authReducer = authSlice.reducer

@@ -2,12 +2,22 @@ import { NavLink } from 'react-router-dom'
 import Logo from '../assets/img/argentBankLogo.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { getToken } from '../auth/authSelectors.ts'
-import { logout } from '../auth/authActions.ts'
+import { checkToken, logout } from '../auth/authActions.ts'
 import { ThunkDispatch } from 'redux-thunk'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect } from 'react'
+import {
+  faArrowRightFromBracket,
+  faCircleUser,
+} from '@fortawesome/free-solid-svg-icons'
 
 export const Navbar = () => {
   const token = useSelector(getToken)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+
+  useEffect(() => {
+    dispatch(checkToken())
+  }, [])
 
   const handleLogout = () => {
     dispatch(logout())
@@ -25,13 +35,19 @@ export const Navbar = () => {
       </NavLink>
       <div>
         {token ? (
-          <NavLink to="/" className="main-nav-item" onClick={handleLogout}>
-            <i className="fa fa-user-circle"></i>
-            Sign Out
-          </NavLink>
+          <>
+            <NavLink className="main-nav-item" to="/profile">
+              <FontAwesomeIcon icon={faCircleUser} />
+              Tony
+            </NavLink>
+            <NavLink to="/" className="main-nav-item" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
+              Sign Out
+            </NavLink>
+          </>
         ) : (
           <NavLink className="main-nav-item" to="/login">
-            <i className="fa fa-user-circle"></i>
+            <FontAwesomeIcon icon={faCircleUser} />
             Sign In
           </NavLink>
         )}

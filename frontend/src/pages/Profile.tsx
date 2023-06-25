@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { getToken, isLoading } from '../auth/authSelectors.ts'
+import { getToken } from '../auth/authSelectors.ts'
 import { useEffect } from 'react'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const token = useSelector(getToken)
-  const loading = useSelector(isLoading)
 
   useEffect(() => {
     if (!token) {
@@ -19,7 +18,7 @@ export const Profile = () => {
   }
 
   return (
-    <>
+    <div className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
@@ -59,6 +58,6 @@ export const Profile = () => {
           <button className="transaction-button">View transactions</button>
         </div>
       </section>
-    </>
+    </div>
   )
 }

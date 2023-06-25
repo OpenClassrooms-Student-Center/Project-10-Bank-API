@@ -1,37 +1,33 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { checkToken, login } from '../auth/authActions.ts'
 import { useNavigate } from 'react-router'
 import { getError, getToken, isLoading } from '../auth/authSelectors.ts'
-import { Loader } from '../ui/Loader.tsx'
 
 export const Login = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [remember, setRemember] = useState(false)
+  const usernameRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+  const rememberRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigate = useNavigate()
   const token = useSelector(getToken)
   const error = useSelector(getError)
   const loading = useSelector(isLoading)
 
+  console.log({ loading })
+
   useEffect(() => {
     dispatch(checkToken())
   }, [])
-
-  console.log('loading', loading)
-  if (loading) {
-    return <Loader />
-  }
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
 
     const credentials = {
-      email: username,
-      password,
-      remember: remember,
+      email: usernameRef.current?.value ?? '',
+      password: passwordRef.current?.value ?? '',
+      remember: !!rememberRef.current?.value ?? false,
     }
 
     dispatch(login(credentials))
@@ -50,26 +46,14 @@ export const Login = () => {
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            onChange={(event) => setUsername(event.target.value)}
-          />
+          <input type="text" id="username" ref={usernameRef} />
         </div>
         <div className="input-wrapper">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(event) => setPassword(event.target.value)}
-          />
+          <input type="password" id="password" ref={passwordRef} />
         </div>
         <div className="input-remember">
-          <input
-            type="checkbox"
-            id="remember-me"
-            onChange={() => setRemember(!remember)}
-          />
+          <input type="checkbox" id="" ref={rememberRef} />
           <label htmlFor="remember-me">Remember me</label>
         </div>
         {error && <p>{error}</p>}
