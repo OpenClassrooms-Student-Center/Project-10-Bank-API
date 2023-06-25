@@ -1,20 +1,38 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { getToken } from '../auth/authSelectors.ts'
+import { getToken, isLoading } from '../auth/authSelectors.ts'
 import { useEffect } from 'react'
+import { Loader } from '../ui/Loader.tsx'
+import { ThunkDispatch } from 'redux-thunk'
+import { checkToken } from '../auth/authActions.ts'
 
-export const Profile = () => {
+function useAsAuthenticated() {
   const navigate = useNavigate()
   const token = useSelector(getToken)
+  const loading = useSelector(isLoading)
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
   useEffect(() => {
+    dispatch(checkToken())
+  }, [])
+
+  useEffect(() => {
+    if (loading) {
+      return undefined
+    }
     if (!token) {
       navigate('/')
     }
-  }, [token, navigate])
+  }, [token, navigate, loading])
 
-  if (!token) {
-    return <p>Loading...</p>
+  return { loading }
+}
+
+export const Profile = () => {
+  const { loading } = useAsAuthenticated()
+
+  if (loading) {
+    return <Loader />
   }
 
   return (

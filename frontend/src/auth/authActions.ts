@@ -12,7 +12,7 @@ const initialState: AuthState = {
   token: null,
   error: null,
   remember: false,
-  isLoading: false,
+  isLoading: true,
 }
 
 export const login = createAsyncThunk<
@@ -69,7 +69,6 @@ const authSlice = createSlice({
       state.isLoading = true
       if (!(sessionStorage.getItem('token') || localStorage.getItem('token'))) {
         state.token = null
-        console.log('!token')
         state.isLoading = false
       }
 
@@ -80,9 +79,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state, action) => {
-        state.isLoading = true
-      })
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload
         state.error = null

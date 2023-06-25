@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { checkToken, login } from '../auth/authActions.ts'
 import { useNavigate } from 'react-router'
-import { getError, getToken, isLoading } from '../auth/authSelectors.ts'
+import { getError, getToken } from '../auth/authSelectors.ts'
 
 export const Login = () => {
   const usernameRef = useRef<HTMLInputElement>(null)
@@ -13,9 +13,6 @@ export const Login = () => {
   const navigate = useNavigate()
   const token = useSelector(getToken)
   const error = useSelector(getError)
-  const loading = useSelector(isLoading)
-
-  console.log({ loading })
 
   useEffect(() => {
     dispatch(checkToken())
