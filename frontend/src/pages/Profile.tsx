@@ -1,39 +1,31 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
-import { getToken, isLoading } from '../auth/authSelectors.ts'
-import { useEffect } from 'react'
-import { Loader } from '../ui/Loader.tsx'
-import { ThunkDispatch } from 'redux-thunk'
-import { checkToken } from '../auth/authActions.ts'
-
-function useAsAuthenticated() {
-  const navigate = useNavigate()
-  const token = useSelector(getToken)
-  const loading = useSelector(isLoading)
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
-
-  useEffect(() => {
-    dispatch(checkToken())
-  }, [])
-
-  useEffect(() => {
-    if (loading) {
-      return undefined
-    }
-    if (!token) {
-      navigate('/')
-    }
-  }, [token, navigate, loading])
-
-  return { loading }
-}
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
+import { getFirstName, getLastName } from '../user/userSelectors.ts'
+import { EditForm } from '../ui/EditForm.tsx'
+import { AccountCard } from '../ui/AccountCard.tsx'
 
 export const Profile = () => {
-  const { loading } = useAsAuthenticated()
+  const firstName = useSelector(getFirstName)
+  const lastName = useSelector(getLastName)
+  const transactions = [
+    {
+      title: 'Argent Bank Checking (x8349)',
+      amount: '$2,082.79',
+      description: 'Available Balance',
+    },
+    {
+      title: 'Argent Bank Savings (x6712)',
+      amount: '$10,928.42',
+      description: 'Available Balance',
+    },
+    {
+      title: 'Argent Bank Credit Card (x8349)',
+      amount: '$184.30',
+      description: 'Current Balance',
+    },
+  ]
 
-  if (loading) {
-    return <Loader />
-  }
+  const [showEditUser, setShowEditUser] = useState(false)
 
   return (
     <div className="main bg-dark">
@@ -41,41 +33,20 @@ export const Profile = () => {
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {`${firstName} ${lastName}`}!
         </h1>
-        <button className="edit-button">Edit Name</button>
+        {!showEditUser ? (
+          <button className="edit-button" onClick={() => setShowEditUser(true)}>
+            Edit Name
+          </button>
+        ) : (
+          <EditForm setShowEditUser={setShowEditUser} />
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      {transactions.map((transaction) => (
+        <AccountCard transaction={transaction} key={transaction.title} />
+      ))}
     </div>
   )
 }

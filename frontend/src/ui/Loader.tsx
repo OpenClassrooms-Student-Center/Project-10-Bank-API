@@ -1,3 +1,7 @@
 export const Loader = () => {
-  return <p>Loading...</p>
+  return (
+    <div className="loader">
+      <div className="circle"></div>
+    </div>
+  )
 }

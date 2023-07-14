@@ -1,9 +1,12 @@
-import { FormEvent, useEffect, useRef } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
-import { checkToken, login } from '../auth/authActions.ts'
+import { login } from '../auth/authActions.ts'
 import { useNavigate } from 'react-router'
-import { getError, getToken } from '../auth/authSelectors.ts'
+import { getToken } from '../auth/authSelectors.ts'
+import useAsAuthenticated from '../hooks/useAsAuthenticated.ts'
+import { isLoading } from '../loading/loadingSelectors.ts'
+import { Loader } from '../ui/Loader.tsx'
 
 export const Login = () => {
   const usernameRef = useRef<HTMLInputElement>(null)
@@ -12,13 +15,12 @@ export const Login = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigate = useNavigate()
   const token = useSelector(getToken)
-  const error = useSelector(getError)
+  const loading = useSelector(isLoading)
+  const [error, setError] = useState()
 
-  useEffect(() => {
-    dispatch(checkToken())
-  }, [])
+  useAsAuthenticated()
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
     const credentials = {
@@ -27,7 +29,11 @@ export const Login = () => {
       remember: !!rememberRef.current?.value ?? false,
     }
 
-    dispatch(login(credentials))
+    try {
+      await dispatch(login(credentials)).unwrap()
+    } catch (error: any) {
+      setError(error.message)
+    }
   }
 
   useEffect(() => {
@@ -35,6 +41,10 @@ export const Login = () => {
       navigate('/profile')
     }
   }, [token])
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <section className="sign-in-content">

@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { url } from '../libs/api.ts'
 
 export interface AuthState {
-  token: string | null
+  token: string | null | undefined
   error: string | null
   remember: boolean
-  isLoading: boolean
+  isAuth: boolean
 }
 
 const initialState: AuthState = {
-  token: null,
+  token: undefined,
   error: null,
   remember: false,
-  isLoading: true,
+  isAuth: false,
 }
 
 export const login = createAsyncThunk<
@@ -20,11 +20,12 @@ export const login = createAsyncThunk<
   { email: string; password: string; remember: boolean }
 >(
   'auth/login',
-  async (
-    credentials: { email: string; password: string; remember: boolean },
-    { rejectWithValue }
-  ) => {
-    const response = await fetch(`${url}user/login`, {
+  async (credentials: {
+    email: string
+    password: string
+    remember: boolean
+  }) => {
+    const response = await fetch(`${url}/user/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -38,20 +39,17 @@ export const login = createAsyncThunk<
 
     const data = await response.json()
 
-    if (response.ok) {
-      const { token } = data.body
-
+    if (response.status === 200) {
       if (credentials.remember) {
-        localStorage.setItem('token', token)
+        localStorage.setItem('token', data.body.token)
+      } else {
+        sessionStorage.setItem('token', data.body.token)
       }
-      sessionStorage.setItem('token', token)
 
-      return token
+      return data.body.token
     }
 
-    const error = data.message as string
-
-    return rejectWithValue(error)
+    throw new Error(data.message)
   }
 )
 
@@ -66,26 +64,23 @@ const authSlice = createSlice({
       state.error = null
     },
     checkToken(state) {
-      state.isLoading = true
       if (!(sessionStorage.getItem('token') || localStorage.getItem('token'))) {
         state.token = null
-        state.isLoading = false
       }
 
       state.token =
         sessionStorage.getItem('token') || localStorage.getItem('token')
-      state.isLoading = false
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload
-        state.error = null
+        state.isAuth = true
       })
-      .addCase(login.rejected, (state, action) => {
-        state.token = null
-        state.error = (action.payload as string) ?? "Une erreur s'est produite"
+      .addCase(login.rejected, (state) => {
+        state.token = undefined
+        state.isAuth = false
       })
   },
 })
