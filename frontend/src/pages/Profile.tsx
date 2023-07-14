@@ -1,59 +1,52 @@
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
-import { getToken } from '../auth/authSelectors.ts'
-import { useEffect } from 'react'
+import { useState } from 'react'
+import { getFirstName, getLastName } from '../user/userSelectors.ts'
+import { EditForm } from '../ui/EditForm.tsx'
+import { AccountCard } from '../ui/AccountCard.tsx'
 
 export const Profile = () => {
-  const navigate = useNavigate()
-  const token = useSelector(getToken)
+  const firstName = useSelector(getFirstName)
+  const lastName = useSelector(getLastName)
+  const transactions = [
+    {
+      title: 'Argent Bank Checking (x8349)',
+      amount: '$2,082.79',
+      description: 'Available Balance',
+    },
+    {
+      title: 'Argent Bank Savings (x6712)',
+      amount: '$10,928.42',
+      description: 'Available Balance',
+    },
+    {
+      title: 'Argent Bank Credit Card (x8349)',
+      amount: '$184.30',
+      description: 'Current Balance',
+    },
+  ]
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/')
-    }
-  }, [token, navigate])
+  const [showEditUser, setShowEditUser] = useState(false)
 
   return (
-    <>
+    <div className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {`${firstName} ${lastName}`}!
         </h1>
-        <button className="edit-button">Edit Name</button>
+        {!showEditUser ? (
+          <button className="edit-button" onClick={() => setShowEditUser(true)}>
+            Edit Name
+          </button>
+        ) : (
+          <EditForm setShowEditUser={setShowEditUser} />
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-    </>
+      {transactions.map((transaction) => (
+        <AccountCard transaction={transaction} key={transaction.title} />
+      ))}
+    </div>
   )
 }
