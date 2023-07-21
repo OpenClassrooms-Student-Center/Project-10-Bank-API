@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.11
+servers:
+  - url: http://localhost:3001/api/v1
+paths:
+  /transactions:
+    post:
+      tags:
+        - Transactions
+      summary: Add a new transaction to the store
+      description: Add a new transaction to the store
+      operationId: addPost
+      requestBody:
+        description: Create a new transaction in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '405':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+  /transaction/{id}:
+    get:
+      tags:
+        - Transactions
+      summary: Find transation by ID
+      description: Returns a single transaction
+      operationId: getTransactionById
+      parameters:
+        - name: id
+          in: path
+          description: ID of transaction to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Transactions
+      summary: Updates a transaction in the store with form data
+      description: ''
+      operationId: updateTransactionWithForm
+      parameters:
+        - name: id
+          in: path
+          description: ID of transaction that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Transactions
+      summary: Update an existing transaction
+      description: Update an existing transaction by Id
+      operationId: updateTransaction
+      parameters:
+        - name: id
+          in: path
+          description: ID of transaction to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existent transaction in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Transaction not found
+        '405':
+          description: Validation exception
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Transactions
+      summary: Deletes a transaction
+      description: delete a transaction
+      operationId: deleteTransaction
+      parameters:
+        - name: id
+          in: path
+          description: Transaction id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Transaction not found
+        '405':
+          description: Validation exception
+        '500':
+          description: Internal Server Error
+      security:
+        - bearerAuth: []
+components:
+  responses:
+    UnauthorizedError:
+      description: Access JWT token is missing or invalid
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        date:
+          type: string
+        description:
+          type: string
+        amount:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: integer
+        balance:
+          type: object
+          properties:
+            currency:
+              type: string
+            value:
+              type: integer
+        transactionType:
+          type: string
+        category:
+          type: string
+        notes:
+          type: object
+          properties:
+            id:
+              type: integer
+            content:
+              type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
