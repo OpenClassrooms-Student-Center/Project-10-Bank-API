@@ -208,12 +208,14 @@ components:
         category:
           type: string
         notes:
-          type: object
-          properties:
-            id:
-              type: integer
-            content:
-              type: string
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              content:
+                type: string
   securitySchemes:
     bearerAuth:
       type: http
