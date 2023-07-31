@@ -13,7 +13,7 @@ function App() {
         <Banner />
       </main>
       <section className='features'>
-        <h2 class="sr-only">Features</h2>
+        <h2 className="sr-only">Features</h2>
         <Features
           icon={icon1}
           title={"You are our #1 priority"}
