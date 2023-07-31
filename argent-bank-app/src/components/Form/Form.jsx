@@ -1,9 +1,12 @@
 import './form.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
 
 function Form() {
     return (
         <section class="sign-in-content">
-            <i class="fa fa-user-circle sign-in-icon"></i>
+            <FontAwesomeIcon icon={faCircleUser} />
             <h1>Sign In</h1>
             <form>
                 <div class="input-wrapper">
@@ -20,7 +23,7 @@ function Form() {
                     >
                 </div>
                 {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                <a href="./user.html" class="sign-in-button">Sign In</a>
+                <Link to="/profile" class="sign-in-button">Sign In</Link>
                 {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
                 {/* <button class="sign-in-button">Sign In</button> */}
 
