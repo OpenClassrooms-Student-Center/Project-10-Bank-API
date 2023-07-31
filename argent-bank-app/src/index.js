@@ -4,13 +4,15 @@ import './index.css';
 import App from './pages/Home';
 
 import Navigation from './components/Navigation';
+import Footer from './layout/Footer/Footer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
     <Navigation />
+    {/* <App /> */}
+    {/* <Footer /> */}
   </React.StrictMode>
 );
 
