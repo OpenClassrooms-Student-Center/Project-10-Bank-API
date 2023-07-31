@@ -4,6 +4,7 @@
     color: #fff;
     font-weight: bold;
     padding: 10px;
+    cursor: pointer;
 }
 
 .transaction-button {
@@ -16,4 +17,5 @@
     border-color: #00bc77;
     background-color: #00bc77;
     color: #fff;
+    cursor: pointer;
 }
