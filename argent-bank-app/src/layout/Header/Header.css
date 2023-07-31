@@ -32,3 +32,7 @@
     max-width: 100%;
     width: 200px;
 }
+
+svg{
+    margin-left: 2px;
+}
