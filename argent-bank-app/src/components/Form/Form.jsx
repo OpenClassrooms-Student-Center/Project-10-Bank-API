@@ -2,14 +2,28 @@ import './form.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
+
 import UserLogin from '../../services/hooks/userLogin';
-import { URL_PROFILE } from '../../config';
+import { URL_LOGIN, URL_PROFILE } from '../../config';
+import React, { useEffect, useState } from 'react';
+
 
 
 function Form() {
     const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage } = UserLogin()
-
     const navigate = useNavigate()
+    const [accessTokenValid, setAccessTokenValid ] = useState(false)
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('authAccessToken')
+
+        if(accessToken) {
+            setAccessTokenValid(true)
+            console.log('Utilisateur connecté')
+        } else{
+            console.log('Utilisateur non connecté')
+        }
+    }, []);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -22,8 +36,13 @@ function Form() {
         const loginSuccess = await handleLogin()
 
         if (loginSuccess) {
-            // go to profile page
-            navigate(URL_PROFILE)
+            if(accessTokenValid) {                
+                // go to profile page
+                navigate(URL_PROFILE)
+            } else {
+                navigate(URL_LOGIN)
+            }
+            
         } else {
             setErrorMessage('Identifiants incorrects')
         }

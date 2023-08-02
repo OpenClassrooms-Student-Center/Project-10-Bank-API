@@ -16,9 +16,8 @@ const UserLogin = () => {
                 })
         
                 // if connexion successfull, set the token into the local storage
-                const token = response.data.body.token
-                localStorage.setItem('authToken', token)
-
+                const accessToken = response.data.body.token
+                localStorage.setItem('authAcessToken', accessToken)
                 return true
                 
             } catch (error) {
