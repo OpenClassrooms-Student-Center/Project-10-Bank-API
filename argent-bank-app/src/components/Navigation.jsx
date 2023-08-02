@@ -8,6 +8,7 @@ import Profile from '../pages/Profile/Profile';
 import Error from '../pages/Error/Error'
 
 
+
 function Navigation() {
     return (
         <Router>
