@@ -6,6 +6,7 @@ import Home from '../pages/Home/index'
 import Login from '../pages/Login/Login';
 import Profile from '../pages/Profile/Profile';
 import Error from '../pages/Error/Error'
+import { URL_PROFILE } from '../config';
 
 
 
@@ -16,7 +17,7 @@ function Navigation() {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/profile' element={<Profile />} />
+                <Route path={ URL_PROFILE } element={<Profile />} />
                 <Route path='*' element={<Error />} />
             </Routes>
             <Footer />

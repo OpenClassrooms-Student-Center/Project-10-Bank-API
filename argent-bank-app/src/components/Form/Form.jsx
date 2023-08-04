@@ -10,9 +10,9 @@ import React, { useEffect, useState } from 'react';
 
 
 function Form() {
-    const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage } = UserLogin()
+    const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage, accessTokenValid, setAccessTokenValid } = UserLogin()
     const navigate = useNavigate()
-    const [accessTokenValid, setAccessTokenValid ] = useState(false)
+
 
     useEffect(() => {
         const accessToken = localStorage.getItem('authAccessToken')
@@ -23,7 +23,7 @@ function Form() {
         } else{
             console.log('Utilisateur non connecté')
         }
-    }, []);
+    }, [setAccessTokenValid]);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -76,7 +76,13 @@ function Form() {
                 </div>
                 {errorMessage && <div>{errorMessage}</div>}
                 {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                <button type='submit' className="sign-in-button">Sign In</button>
+                <button 
+                    type='submit' 
+                    className="sign-in-button"
+                    // onClick={() => handleLogout(accessTokenValid)}
+                >
+                    Sign In
+                </button>
                 {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
                 {/* <button className="sign-in-button">Sign In</button> */}
 
