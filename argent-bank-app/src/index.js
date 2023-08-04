@@ -4,14 +4,16 @@ import './index.css';
 import App from './pages/Home';
 
 import Navigation from './components/Navigation';
-import Footer from './layout/Footer/Footer';
+import { AuthProvider } from './context/AuthProvider';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Navigation />
-    {/* <App /> */}
+    <AuthProvider>
+      <Navigation />
+      {/* <App /> */}
+    </AuthProvider>
     {/* <Footer /> */}
   </React.StrictMode>
 );
