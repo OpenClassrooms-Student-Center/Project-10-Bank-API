@@ -4,10 +4,13 @@ import logo from "../../assets/img/argentBankLogo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 
-import UserLogin from '../../services/hooks/userLogin'
+import AuthContext from '../../context/AuthProvider'
+import { useContext } from 'react'
 
 function Header() {
-    const { accessTokenValid, handleLogout, setAccessTokenValid } = UserLogin()
+    const { accessTokenValid, handleLogout } = useContext(AuthContext)
+
+    
     return (
         <nav className="main-nav">
             <Link className="main-nav-logo" to="/">

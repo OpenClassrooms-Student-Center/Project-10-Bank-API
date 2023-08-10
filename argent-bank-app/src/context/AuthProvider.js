@@ -1,12 +1,22 @@
-import { createContext, useState } from "react";
+import { createContext, useContext ,  useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({})
 
 export const AuthProvider = ({ children })  => {
-    const [ auth, setAuth ] = useState({})
+    const [ accessTokenValid, setAccessTokenValid ] = useState(false)
+    // const navigate = useNavigate()
+
+    const handleLogout = () => {
+        // delete token from the local storage 
+        localStorage.removeItem('authAccessToken')
+        console.log('Utilisateur déconnecté')
+        // navigate('/')
+        setAccessTokenValid(false)
+    }
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth}}>
+        <AuthContext.Provider value={{accessTokenValid, setAccessTokenValid , handleLogout}}>
             {children}
         </AuthContext.Provider>
     )

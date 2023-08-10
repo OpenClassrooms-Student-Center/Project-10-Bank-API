@@ -1,32 +1,33 @@
 import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
 import AuthContext from "../../context/AuthProvider"
 import { URL_LOGIN } from "../../config"
-import axios from '../../api/axios'
+import { axiosInstance } from "../../api/axios"
 
 const UserLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-    const { setAuth } = useContext(AuthContext)
-    const [accessTokenValid, setAccessTokenValid] = useState(false);
-    const navigate = useNavigate()
+    const [ accessTokenValid, setAccessTokenValid ] = useState(false) 
+    // const { accessTokenValid, setAccessTokenValid } = useContext(AuthContext)
+    const authCtx = useContext(AuthContext)
+
+
 
     const handleLogin = async () => {
 
         try {
-            const response = await axios.post(URL_LOGIN, {
-                email,
-                password
-            },
+            const response = await axiosInstance.post(URL_LOGIN,
+                { email, password },
                 {
-                    headers: { 'Content-Type': 'application/json' },
-                    // withCredentials: true
+                    headers: {'Content-Type': 'application/json'},
+                    withCredentials: true,
+                    'Authorization': `Bearer ${localStorage.getItem('authAccessToken')}`
                 })
-
             // if connexion successfull, set the token into the local storage
             const accessToken = response.data.body.token
-            localStorage.setItem('authAcessToken', accessToken)
+            localStorage.setItem('authAccessToken', accessToken)
+            console.log(email , password)
+            console.log(response.data)
             console.log('Connexion réussie ! Token d\'accès:', accessToken);
 
             setAccessTokenValid(true)
@@ -39,21 +40,8 @@ const UserLogin = () => {
         }
     }
 
-    const handleLogout = () => {
-        // delete token from the local storage 
-        localStorage.removeItem('authAccessToken')
-        console.log('Utilisateur déconnecté')
-        navigate('/')
-        setAccessTokenValid(false)
-    }
 
-    // module.exports = { handleLogin }
-
-    return { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage, handleLogout, accessTokenValid, setAccessTokenValid }
+    return { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage, accessTokenValid, setAccessTokenValid }
 }
-
-
-
-
 
 export default UserLogin

@@ -1,12 +1,17 @@
 import './profile.css'
 import Button from '../../components/Button/Button'
 import Account from '../../components/Account/Account'
+import { GetDatas } from '../../services/hooks/userData'
+import { URL_PROFILE } from '../../config'
+import { useState, useEffect } from 'react'
 
 function Profile() {
+    const { userData } = GetDatas()
+
     return (
         <main className='main bg-dark'>
             <div className="header">
-                <h1>Welcome back<br />Tony Jarvis!</h1>
+                <h1>Welcome back<br /> {userData.firstName} {userData.lastName} </h1>
                 <Button text="Edit Name" className="edit-button" />
             </div>
             <h2 className="sr-only">Accounts</h2>
