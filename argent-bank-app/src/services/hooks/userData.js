@@ -11,14 +11,12 @@ export function GetDatas() {
 
         if (accessToken) {
             axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-            console.log("le token : ", accessToken)
 
             userDatas().then((data) => {
                 setUserData({
                     firstName: data.firstName,
                     lastName: data.lastName,
                 })
-                console.log(data)
             }).catch((error) => {
                 console.error('Erreur lors de la récupération des données')
             })
