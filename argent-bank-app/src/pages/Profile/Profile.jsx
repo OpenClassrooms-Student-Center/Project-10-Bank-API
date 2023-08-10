@@ -7,9 +7,10 @@ import EditProfile from '../../components/EditProfile/EditProfile'
 
 
 function Profile() {
-    const { userData } = GetDatas()
-    const [isEditing, setIsEditing] = useState(false)
     const [refreshUserData, setRefreshUserData] = useState(false)
+    const { userData } = GetDatas(refreshUserData)
+    const [isEditing, setIsEditing] = useState(false)
+
 
 
     const handleUpdateSuccess = () => {

@@ -6,11 +6,11 @@ import './editProfile.css'
 import Button from '../Button/Button'
 
 
-function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh}) {
-    const [ firstName, setFirstName ] = useState(userData.firstName)
-    const [ lastName, setLastName ] = useState(userData.lastName)
-    const [ erroMessage, setErrorMessage ] = useState('')
-    const [ updateSuccess, setUpdateSuccess ] = useState(false)
+function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
+    const [firstName, setFirstName] = useState(userData.firstName)
+    const [lastName, setLastName] = useState(userData.lastName)
+    const [erroMessage, setErrorMessage] = useState('')
+    const [updateSuccess, setUpdateSuccess] = useState(false)
 
 
     const handleFormSubmit = async (e) => {
@@ -31,39 +31,44 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh}) {
         }
     }
 
-    return(
-        <form onSubmit={handleFormSubmit}>
-            <div>
-                <label htmlFor="firstName">First Name</label>
-                <input 
-                    type="text" 
-                    id='firstName'
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="lastName">Last Name</label>
-                <input 
-                    type="text" 
-                    id='lastName'
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-            </div>
-            {erroMessage && <div>{erroMessage}</div>}
-            {updateSuccess && (
-                <div>
-                    <p>Profile successfuly updated!</p>
-                    <Button 
-                        onClick={() => setUpdateSuccess(false)}
-                        text="Return to Profile"
-                        className="edit-button"
+    return (
+        <section className="sign-in-content">
+            <form onSubmit={handleFormSubmit}>
+                <div className="input-wrapper">
+                    <label htmlFor="firstName">First Name</label>
+                    <input
+                        type="text"
+                        id='firstName'
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                     />
                 </div>
-            )}
-            <Button type='submit' text="Update Profile" className="edit-button" />
-        </form>
+                <div className="input-wrapper">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                        type="text"
+                        id='lastName'
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                </div>
+                {erroMessage && <div>{erroMessage}</div>}
+                {updateSuccess && (
+                    <div>
+                        <p>Profile successfuly updated!</p>
+                        <Button
+                            onClick={() => {
+                                setUpdateSuccess(false)
+                            }}
+                            text="Return to Profile"
+                            className="edit-button"
+                            type='submit'
+                        />
+                    </div>
+                )}
+                <Button type='submit' text="Update Profile" className="edit-button" />
+            </form>
+        </section>
     )
 }
 
