@@ -3,12 +3,15 @@ import { axiosInstance } from '../../api/axios'
 import { URL_PROFILE } from '../../config'
 
 import './editProfile.css'
+import Button from '../Button/Button'
 
 
 function EditProfile({ userData, onUpdateSuccess}) {
     const [ firstName, setFirstName ] = useState(userData.firstName)
     const [ lastName, setLastName ] = useState(userData.lastName)
     const [ erroMessage, setErrorMessage ] = useState('')
+    const [ updateSuccess, setUpdateSuccess ] = useState(false)
+
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -19,6 +22,7 @@ function EditProfile({ userData, onUpdateSuccess}) {
                 lastName,
             })
             console.log(response.data)
+            
         } catch (error) {
             console.error(error)
             setErrorMessage('An error occured while updating the profile')
@@ -46,7 +50,7 @@ function EditProfile({ userData, onUpdateSuccess}) {
                 />
             </div>
             {erroMessage && <div>{erroMessage}</div>}
-            <button type='submit'>Update Profile</button>
+            <Button type='submit' text="Update Profile" className="edit-button" />
         </form>
     )
 }
