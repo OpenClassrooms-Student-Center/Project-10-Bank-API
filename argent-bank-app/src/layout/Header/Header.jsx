@@ -3,13 +3,17 @@ import './Header.css'
 import logo from "../../assets/img/argentBankLogo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
-
-import AuthContext from '../../context/AuthProvider'
-import { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../../utils/slices/authSlice'
 
 function Header() {
-    const { accessTokenValid, handleLogout } = useContext(AuthContext)
 
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
     
     return (
         <nav className="main-nav">
@@ -22,7 +26,7 @@ function Header() {
                 <h1 className="sr-only">Argent Bank</h1>
             </Link>
             <div>
-                {accessTokenValid ? (
+                {isAuthenticated ? (
                     <Link className="main-nav-item" to="/" onClick={handleLogout}>
                         <FontAwesomeIcon icon={faCircleUser} />
                         Sign Out

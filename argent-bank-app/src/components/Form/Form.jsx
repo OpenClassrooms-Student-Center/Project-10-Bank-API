@@ -5,25 +5,21 @@ import { useNavigate } from 'react-router-dom';
 
 import UserLogin from '../../services/hooks/userLogin';
 import { URL_LOGIN, URL_PROFILE } from '../../config';
-import React, { useEffect, useState } from 'react';
+import { setAccessToken } from '../../utils/slices/authSlice';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Form() {
-    const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage, accessTokenValid, setAccessTokenValid } = UserLogin()
+    const dispatch = useDispatch()
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+    const accessToken = useSelector(state => state.auth.accessToken)
+    const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage } = UserLogin();
     const navigate = useNavigate()
 
 
-    useEffect(() => {
-        const accessToken = localStorage.getItem('authAccessToken')
 
-        if(accessToken) {
-            setAccessTokenValid(true)
-            console.log('Utilisateur connecté')
-        } else{
-            console.log('Utilisateur non connecté')
-        }
-    }, [setAccessTokenValid]);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault()
@@ -33,19 +29,22 @@ function Form() {
             return;
         }
 
-        const loginSuccess = await handleLogin()
+        const loginSuccess = await handleLogin();
 
         if (loginSuccess) {
-            if(accessTokenValid) {                
-                // go to profile page
-                navigate(URL_PROFILE)
+            // Mise à jour du token dans le store Redux
+            dispatch(setAccessToken(accessToken));
+
+            // Rediriger vers la page de profil ou la page de connexion en fonction de l'authentification
+            if (isAuthenticated) {
+                navigate(URL_PROFILE);
             } else {
-                navigate(URL_LOGIN)
+                navigate(URL_LOGIN);
             }
-            
         } else {
-            setErrorMessage('Identifiants incorrects')
+            setErrorMessage('Identifiants incorrects');
         }
+
     }
 
 
@@ -76,10 +75,10 @@ function Form() {
                 </div>
                 {errorMessage && <div>{errorMessage}</div>}
                 {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                <button 
-                    type='submit' 
+                <button
+                    type='submit'
                     className="sign-in-button"
-                    // onClick={() => handleLogout(accessTokenValid)}
+                // onClick={() => handleLogout(accessTokenValid)}
                 >
                     Sign In
                 </button>

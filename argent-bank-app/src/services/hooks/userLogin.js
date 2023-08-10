@@ -1,20 +1,17 @@
-import { useState, useContext } from "react"
-import AuthContext from "../../context/AuthProvider"
+import { useState } from "react"
 import { URL_LOGIN } from "../../config"
 import { axiosInstance } from "../../api/axios"
+import { useDispatch } from 'react-redux'
+import { setAccessToken } from "../../utils/slices/authSlice"
 
 const UserLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-    const [ accessTokenValid, setAccessTokenValid ] = useState(false) 
-    // const { accessTokenValid, setAccessTokenValid } = useContext(AuthContext)
-    const authCtx = useContext(AuthContext)
 
-
+    const dispatch = useDispatch()
 
     const handleLogin = async () => {
-
         try {
             const response = await axiosInstance.post(URL_LOGIN,
                 { email, password },
@@ -25,12 +22,12 @@ const UserLogin = () => {
                 })
             // if connexion successfull, set the token into the local storage
             const accessToken = response.data.body.token
-            localStorage.setItem('authAccessToken', accessToken)
+            dispatch(setAccessToken(accessToken))
+            // localStorage.setItem('authAccessToken', accessToken)
             console.log(email , password)
             console.log(response.data)
             console.log('Connexion réussie ! Token d\'accès:', accessToken);
 
-            setAccessTokenValid(true)
             return true
 
         } catch (error) {
@@ -41,7 +38,7 @@ const UserLogin = () => {
     }
 
 
-    return { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage, accessTokenValid, setAccessTokenValid }
+    return { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage }
 }
 
 export default UserLogin
