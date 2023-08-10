@@ -9,10 +9,15 @@ import EditProfile from '../../components/EditProfile/EditProfile'
 function Profile() {
     const { userData } = GetDatas()
     const [isEditing, setIsEditing] = useState(false)
+    const [refreshUserData, setRefreshUserData] = useState(false)
 
 
     const handleUpdateSuccess = () => {
         setIsEditing(false)
+    }
+
+    const handleUserDataRefresh = () => {
+        setRefreshUserData(!refreshUserData)
     }
 
     return (
@@ -29,7 +34,7 @@ function Profile() {
 
             </div>
             {isEditing ? (
-                <EditProfile userData={userData} onUpdateSuccess={handleUpdateSuccess} />
+                <EditProfile userData={userData} onUpdateSuccess={handleUpdateSuccess} onUserDataRefresh={handleUserDataRefresh} />
             ) : (
                 <div>
                     <h2 className="sr-only">Accounts</h2>

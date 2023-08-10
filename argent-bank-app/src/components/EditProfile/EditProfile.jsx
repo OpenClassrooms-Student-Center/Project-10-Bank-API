@@ -6,7 +6,7 @@ import './editProfile.css'
 import Button from '../Button/Button'
 
 
-function EditProfile({ userData, onUpdateSuccess}) {
+function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh}) {
     const [ firstName, setFirstName ] = useState(userData.firstName)
     const [ lastName, setLastName ] = useState(userData.lastName)
     const [ erroMessage, setErrorMessage ] = useState('')
@@ -22,7 +22,9 @@ function EditProfile({ userData, onUpdateSuccess}) {
                 lastName,
             })
             console.log(response.data)
-            
+            setUpdateSuccess(true)
+            onUpdateSuccess()
+            onUserDataRefresh()
         } catch (error) {
             console.error(error)
             setErrorMessage('An error occured while updating the profile')
@@ -50,6 +52,16 @@ function EditProfile({ userData, onUpdateSuccess}) {
                 />
             </div>
             {erroMessage && <div>{erroMessage}</div>}
+            {updateSuccess && (
+                <div>
+                    <p>Profile successfuly updated!</p>
+                    <Button 
+                        onClick={() => setUpdateSuccess(false)}
+                        text="Return to Profile"
+                        className="edit-button"
+                    />
+                </div>
+            )}
             <Button type='submit' text="Update Profile" className="edit-button" />
         </form>
     )
