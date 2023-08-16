@@ -16,17 +16,17 @@ const UserLogin = () => {
             const response = await axiosInstance.post(URL_LOGIN,
                 { email, password },
                 {
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('authAccessToken')}`,
                     withCredentials: true,
-                    'Authorization': `Bearer ${localStorage.getItem('authAccessToken')}`
+                    },
                 })
             // if connexion successfull, set the token into the local storage
+            
             const accessToken = response.data.body.token
+
+            localStorage.setItem('authAccessToken', accessToken)
             dispatch(setAccessToken(accessToken))
-            // localStorage.setItem('authAccessToken', accessToken)
-            console.log(email , password)
-            console.log(response.data)
-            console.log('Connexion réussie ! Token d\'accès:', accessToken);
 
             return true
 

@@ -5,20 +5,17 @@ import { useNavigate } from 'react-router-dom';
 
 import UserLogin from '../../services/hooks/userLogin';
 import { URL_LOGIN, URL_PROFILE } from '../../config';
-import { setAccessToken } from '../../utils/slices/authSlice';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Form() {
-    const dispatch = useDispatch()
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const accessToken = useSelector(state => state.auth.accessToken)
     const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage } = UserLogin();
+    const [loginSuccess, setLoginSuccess] = useState(false);
     const navigate = useNavigate()
-
-
 
 
     const handleFormSubmit = async (e) => {
@@ -29,23 +26,23 @@ function Form() {
             return;
         }
 
-        const loginSuccess = await handleLogin();
+        const loginResult = await handleLogin();
 
-        if (loginSuccess) {
-            // Mise à jour du token dans le store Redux
-            dispatch(setAccessToken(accessToken));
+        setLoginSuccess(loginResult);
 
-            // Rediriger vers la page de profil ou la page de connexion en fonction de l'authentification
-            if (isAuthenticated) {
+    }
+
+    useEffect(() => {
+        if(loginSuccess){
+            console.log("si le login ok ", accessToken) 
+
+            if (isAuthenticated || loginSuccess) {
                 navigate(URL_PROFILE);
             } else {
                 navigate(URL_LOGIN);
             }
-        } else {
-            setErrorMessage('Identifiants incorrects');
         }
-
-    }
+    }, [loginSuccess, accessToken, isAuthenticated, navigate]);
 
 
     return (

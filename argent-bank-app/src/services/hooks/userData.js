@@ -1,30 +1,33 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axiosInstance from '../../api/axios';
 import { URL_PROFILE } from '../../config';
-import { userDatas } from '../../api/api';
+
+import { setUser } from '../../utils/slices/userSlice';
 
 export function GetDatas() {
     const [userData, setUserData] = useState({})
+    const dispatch = useDispatch()
+    const accessToken = useSelector(state => state.auth.accessToken)
+
 
     useEffect(() => {
-        const accessToken = localStorage.getItem('authAccessToken')
-
-        if (accessToken) {
-            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-
-            userDatas().then((data) => {
-                setUserData({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
+        const fetchUserData = async () => {
+            try {
+                const response = await axiosInstance.post(URL_PROFILE, null, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`, 
+                    }
                 })
-            }).catch((error) => {
-                console.error('Erreur lors de la récupération des données')
-            })
-
-        } else {
-            console.log('Token manquant')
+                const userDataFromAPI = response.data.body
+                setUserData(userDataFromAPI)
+                dispatch(setUser(userDataFromAPI)) // update user state with the datas
+            } catch (error) {
+                console.error('Erreur lors de la récupération des données.')
+            }
         }
-    }, []);
+        fetchUserData()
+    }, [accessToken, dispatch]);
 
     return {
         userData
