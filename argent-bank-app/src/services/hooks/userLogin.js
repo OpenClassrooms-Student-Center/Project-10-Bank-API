@@ -8,7 +8,6 @@ const UserLogin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-
     const dispatch = useDispatch()
 
     const handleLogin = async () => {
@@ -17,7 +16,6 @@ const UserLogin = () => {
                 { email, password },
                 {
                     headers: {'Content-Type': 'application/json',
-                    // 'Authorization': `Bearer ${localStorage.getItem('authAccessToken')}`,
                     withCredentials: true,
                     },
                 })

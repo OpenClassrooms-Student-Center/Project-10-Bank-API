@@ -1,7 +1,6 @@
 import './profile.css'
 import Button from '../../components/Button/Button'
 import Account from '../../components/Account/Account'
-import { GetDatas } from '../../services/hooks/userData'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, updateUser } from '../../utils/slices/userSlice'
@@ -10,34 +9,20 @@ import { fetchUserData } from '../../services/hooks/userActions'
 
 
 function Profile() {
-    // const [refreshUserData, setRefreshUserData] = useState(false)
-    // const { userData } = GetDatas(refreshUserData)
     const dispatch = useDispatch()
     const { firstName, lastName } = useSelector((state) => state.user);
     const [newFirstName, setNewFirstName] = useState(firstName);
     const [newLastName, setNewLastName] = useState(lastName);
     const [isEditing, setIsEditing] = useState(false)
-    // const accessToken = useSelector(state => state.auth.accessToken)
 
     useEffect(() => {
         dispatch(fetchUserData())
     }, [dispatch]);
 
-
-
-
     const handleUpdateSuccess = () => {
         dispatch(updateUser({ firstName: newFirstName, lastName: newLastName }));
         setIsEditing(false)
     }
-
-    // const handleUserDataRefresh = () => {
-    //     setRefreshUserData(!refreshUserData)
-    // }
-
-    // const handleUserUpdate = (newFirstName, newLastName) => {
-    //     dispatch(setUser({ firstName: newFirstName, lastName: newLastName }));
-    // };
 
     return (
         <main className='main bg-dark'>
@@ -56,8 +41,6 @@ function Profile() {
                 <EditProfile
                     userData={{ firstName, lastName}}
                     onUpdateSuccess={handleUpdateSuccess}
-                    // onUserDataRefresh={handleUserDataRefresh}
-                    // onUserUpdate={handleUserUpdate}
                 />
             ) : (
                 <div>
