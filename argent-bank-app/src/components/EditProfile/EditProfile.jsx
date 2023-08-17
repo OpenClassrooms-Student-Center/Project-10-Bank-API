@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 import { axiosInstance } from '../../api/axios'
 import { URL_PROFILE } from '../../config'
-
-import './editProfile.css'
 import Button from '../Button/Button'
+import './editProfile.css'
+import { setUser } from '../../utils/slices/userSlice'
+
 
 
 function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
@@ -11,10 +15,10 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
     const [lastName, setLastName] = useState(userData.lastName)
     const [erroMessage, setErrorMessage] = useState('')
     const [updateSuccess, setUpdateSuccess] = useState(false)
-
+    const dispatch = useDispatch()
 
     const handleFormSubmit = async (e) => {
-        e.preventDefault()
+
 
         try {
             const response = await axiosInstance.put(URL_PROFILE, {
@@ -23,12 +27,17 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
             })
             console.log(response.data)
             setUpdateSuccess(true)
-            onUpdateSuccess()
-            onUserDataRefresh()
+            dispatch(setUser({ firstName, lastName }))
+
         } catch (error) {
             console.error(error)
             setErrorMessage('An error occured while updating the profile')
         }
+    }
+
+    const handleReturnToProfile = () => {
+        onUserDataRefresh()
+        setUpdateSuccess(false)
     }
 
     return (
@@ -53,20 +62,19 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
                     />
                 </div>
                 {erroMessage && <div>{erroMessage}</div>}
-                {updateSuccess && (
+                {updateSuccess ? (
                     <div>
                         <p>Profile successfuly updated!</p>
                         <Button
-                            onClick={() => {
-                                setUpdateSuccess(false)
-                            }}
+                            onClick={handleReturnToProfile}
                             text="Return to Profile"
                             className="edit-button"
-                            type='submit'
+                            type='button'
                         />
                     </div>
+                ) : (
+                    <Button type='submit' text="Update Profile" className="edit-button" />
                 )}
-                <Button type='submit' text="Update Profile" className="edit-button" />
             </form>
         </section>
     )

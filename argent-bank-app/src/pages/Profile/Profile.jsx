@@ -19,10 +19,24 @@ function Profile() {
         dispatch(fetchUserData())
     }, [dispatch]);
 
-    const handleUpdateSuccess = () => {
-        dispatch(updateUser({ firstName: newFirstName, lastName: newLastName }));
+    // const handleUpdateSuccess = (newFirstName, newLastName) => {
+    //     setNewFirstName(newFirstName)
+    //     setNewLastName(newLastName)
+    //     setIsEditing(false)
+    // }
+
+    const handleUserDataRefresh = () => {
+        dispatch(fetchUserData())
+    }
+
+    const handleEditProfileClick = () => {
+        setIsEditing(true)
+    }
+
+    const handleReturnToProfile = () => {
         setIsEditing(false)
     }
+
 
     return (
         <main className='main bg-dark'>
@@ -33,14 +47,15 @@ function Profile() {
                     <h1>Welcome back<br /> {firstName} {lastName} </h1>
                 )}
                 {!isEditing && (
-                    <Button text="Edit Name" className="edit-button" onClick={() => setIsEditing(true)} />
+                    <Button text="Edit Name" className="edit-button" onClick={handleEditProfileClick} />
                 )}
 
             </div>
             {isEditing ? (
                 <EditProfile
                     userData={{ firstName, lastName}}
-                    onUpdateSuccess={handleUpdateSuccess}
+                    onUserDataRefresh={handleUserDataRefresh}
+                    onReturnToProfile={handleReturnToProfile}
                 />
             ) : (
                 <div>
