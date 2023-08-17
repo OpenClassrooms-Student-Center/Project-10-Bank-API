@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import UserLogin from '../../services/hooks/userLogin';
 import { URL_LOGIN, URL_PROFILE } from '../../config';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 
 
 
@@ -34,7 +34,6 @@ function Form() {
 
     useEffect(() => {
         if(loginSuccess){
-            console.log("si le login ok ", accessToken) 
 
             if (isAuthenticated || loginSuccess) {
                 navigate(URL_PROFILE);

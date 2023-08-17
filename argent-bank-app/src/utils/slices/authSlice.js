@@ -18,6 +18,14 @@ const authSlice = createSlice({
     }
 })
 
+//verify if token is present at the start 
+export const checkToken = () => (dispatch) => {
+    const token = localStorage.getItem('authAccessToken')
+    if (token) {
+        dispatch(setAccessToken(token))
+    }
+}
+
 export const { setAccessToken, logout } = authSlice.actions
 
 export default authSlice.reducer

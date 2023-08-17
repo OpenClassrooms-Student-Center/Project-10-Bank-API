@@ -1,12 +1,24 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import Banner from '../../components/Banner/Banner';
 import Features from '../../components/Features/Features';
 import './home.css'
+import { checkToken } from '../../utils/slices/authSlice';
 
 import icon1 from '../../assets/img/icon-chat.png'
 import icon2 from '../../assets/img/icon-money.png'
 import icon3 from '../../assets/img/icon-security.png'
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    // verify token at the start
+    dispatch(checkToken())
+  }, [dispatch]);
+
+
   return (
     <div className="App">
       <main>
