@@ -15,12 +15,12 @@ function Navigation() {
         <Router>
             <Header />
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/'  />
                 <Route path='/login' element={<Login />} />
                 <Route path={ URL_PROFILE } element={<Profile />} />
                 <Route path='*' element={<Error />} />
             </Routes>
-            <Footer />
+            {/* <Footer /> */}
         </Router>
     );
 }

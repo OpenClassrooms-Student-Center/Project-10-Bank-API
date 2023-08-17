@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './utils/store'
 
 import Navigation from './components/Navigation';
+import Footer from './layout/Footer/Footer';
 
 
 
@@ -14,9 +15,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Navigation />
-      {/* <App /> */}
+      <App />
+      <Footer />
     </Provider>
-    {/* <Footer /> */}
   </React.StrictMode>
 );
 
