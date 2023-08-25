@@ -1,7 +1,7 @@
 import { URL_PROFILE } from '../config';
 import { axiosInstance } from './axios';
 
-// Fonction pour récupérer les données de l'utilisateur
+// Fetching user datas
 export async function userDatas() {
 
   const token = localStorage.getItem('authAccessToken');

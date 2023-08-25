@@ -1,4 +1,4 @@
-import './error.css'
+
 
 function Error() {
     return ( 

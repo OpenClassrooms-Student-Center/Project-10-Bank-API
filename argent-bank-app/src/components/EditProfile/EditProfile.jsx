@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import { axiosInstance } from '../../api/axios'
 import { URL_PROFILE } from '../../config'
 import Button from '../Button/Button'
-import './editProfile.css'
 import { setUser } from '../../utils/slices/userSlice'
 
 
@@ -18,6 +16,11 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
     const dispatch = useDispatch()
 
     const handleFormSubmit = async (e) => {
+
+        if (!firstName || !lastName) {
+            setErrorMessage('Please fill in all fields.');
+            return;
+        }
 
 
         try {

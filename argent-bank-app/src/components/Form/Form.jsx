@@ -1,4 +1,3 @@
-import './form.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
@@ -70,16 +69,13 @@ function Form() {
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
                 {errorMessage && <div>{errorMessage}</div>}
-                {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
                 <button
                     type='submit'
                     className="sign-in-button"
-                // onClick={() => handleLogout(accessTokenValid)}
                 >
                     Sign In
                 </button>
-                {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
-                {/* <button className="sign-in-button">Sign In</button> */}
+
 
             </form>
         </section>
