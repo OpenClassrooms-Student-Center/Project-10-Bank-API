@@ -33,7 +33,6 @@ function EditProfile({ userData, onUpdateSuccess, onUserDataRefresh }) {
             dispatch(setUser({ firstName, lastName }))
 
         } catch (error) {
-            console.error(error)
             setErrorMessage('An error occured while updating the profile')
         }
     }

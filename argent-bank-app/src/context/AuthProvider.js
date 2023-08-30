@@ -10,7 +10,6 @@ export const AuthProvider = ({ children })  => {
     const handleLogout = () => {
         // delete token from the local storage 
         localStorage.removeItem('authAccessToken')
-        console.log('Utilisateur déconnecté')
         // navigate('/')
         setAccessTokenValid(false)
     }
