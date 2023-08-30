@@ -219,6 +219,45 @@ paths:
           description: User unauthorized
         '500':
           description: Internal Server Error
+  /account/{accountId}/transaction/{transactionId}/description:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Account Module
+      summary: User Transactions API
+      description: API for add or edit notes in a transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: accountId
+          description: User account ID
+          required: true 
+          type: string
+        - in: path
+          name: transactionId
+          description: A transaction Id
+          required: true 
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transactions notes edited successully
+          schema:
+            $ref: '#/definitions/TransactionNoteCreate'
+        '204': 
+          description: No transaction retrieved for this account
+        '400':
+          description: Invalid Fields
+        '401':
+          description: User unauthorized
+        '500':
+          description: Internal Server Error
     put:
       security:
         - Bearer: []
@@ -381,16 +420,25 @@ definitions:
     properties:
       status: 
         type: integer
-      id:
+      message:
         type: string
-      date:
-        type: string
-      description:
-        type: string
-      amount: 
-        type: number
-      balance:
-        type: number
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          date:
+            type: string
+          description:
+            type: string
+          amount: 
+            type: number
+          balance:
+            type: number
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
   TransactionNote:
     type: object
     properties:
@@ -398,11 +446,44 @@ definitions:
         type: integer
       message:
         type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          description:
+            type: string
+          amount: 
+            type: number
+          balance:
+            type: number
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
   TransactionNoteDelete:
     type: object
     properties:
       status:
         type: integer
       message:
+        type: string
+      body: 
+        type: object
+        properties:
+          id: 
+            type: string
+          createdAt: 
+            type: string
+          updatedAt: 
+            type: string
+  TransactionNoteCreate:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      id:
         type: string
 
