@@ -7,14 +7,25 @@ import { URL_LOGIN, URL_PROFILE } from '../../config';
 import { useState, useEffect } from 'react';
 import {  useSelector } from 'react-redux';
 
-
-
 function Form() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const accessToken = useSelector(state => state.auth.accessToken)
     const { email, setEmail, password, setPassword, handleLogin, errorMessage, setErrorMessage } = UserLogin();
     const [loginSuccess, setLoginSuccess] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const storedRememberMe = localStorage.getItem('rememberMe');
+        if (storedRememberMe === 'true') {
+            setRememberMe(true);
+        }
+    }, []);
+
+    const handleRememberMeChange = () => {
+        setRememberMe(!rememberMe);
+    };
 
 
     const handleFormSubmit = async (e) => {
@@ -23,6 +34,16 @@ function Form() {
         if (email.trim() === '' || password.trim() === '') {
             setErrorMessage('Veuillez saisir votre email et votre mot de passe.');
             return;
+        }
+
+        localStorage.setItem('rememberMe', rememberMe.toString());
+
+        if(rememberMe) {
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+        } else {
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
         }
 
         const loginResult = await handleLogin();
@@ -41,6 +62,15 @@ function Form() {
             }
         }
     }, [loginSuccess, accessToken, isAuthenticated, navigate]);
+
+    useEffect(() => {
+        if(rememberMe) {
+            const storedEmail = localStorage.getItem('email')
+            const storedPassword = localStorage.getItem('password')
+            setEmail(storedEmail || '')
+            setPassword(storedPassword || '')
+        }
+    }, [rememberMe, setEmail, setPassword]);
 
 
     return (
@@ -65,7 +95,12 @@ function Form() {
                     />
                 </div>
                 <div className="input-remember">
-                    <input type="checkbox" id="remember-me" />
+                    <input 
+                        type="checkbox" 
+                        id="remember-me" 
+                        checked={rememberMe}
+                        onChange={handleRememberMeChange} 
+                    />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
                 {errorMessage && <div>{errorMessage}</div>}
