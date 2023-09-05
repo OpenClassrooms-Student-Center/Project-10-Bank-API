@@ -5,6 +5,7 @@ const authSlice = createSlice({
     initialState: {
         accessToken: null,
         isAuthenticated: false,
+        rememberMe: false,
     },
     reducers: {
         setAccessToken: (state, action) => {
@@ -14,7 +15,7 @@ const authSlice = createSlice({
         logout: (state) => {
             state.accessToken = null
             state.isAuthenticated = false
-        }
+        },
     }
 })
 

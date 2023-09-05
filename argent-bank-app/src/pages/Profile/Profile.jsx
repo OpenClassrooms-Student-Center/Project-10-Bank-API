@@ -19,12 +19,6 @@ function Profile() {
         dispatch(fetchUserData())
     }, [dispatch]);
 
-    // const handleUpdateSuccess = (newFirstName, newLastName) => {
-    //     setNewFirstName(newFirstName)
-    //     setNewLastName(newLastName)
-    //     setIsEditing(false)
-    // }
-
     const handleUserDataRefresh = () => {
         dispatch(fetchUserData())
     }
