@@ -15,7 +15,10 @@ const PORT = process.env.PORT || 3001
 dbConnection()
 
 // Handle CORS issues
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}))
 
 // Request payload middleware
 app.use(express.json())
