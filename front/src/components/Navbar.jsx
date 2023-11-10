@@ -10,7 +10,7 @@ export default function Navbar() {
   const isConnected = useSelector ((state) => state.authentification.isConnected)
   const userData = useSelector((state) => state.userInformation.userData)
 console.log('userData:', userData.firstName);
-console.log('userName:', userData ? userData.userName : 'N/A');
+console.log('userName:', userData ? userData.firstName : 'N/A');
   const dispatch = useDispatch();
 
   // Fonction pour gérer la déconnexion 
