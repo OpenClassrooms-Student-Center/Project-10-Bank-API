@@ -4,46 +4,34 @@ This codebase contains the code needed to run the backend for Argent Bank.
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 
-Argent Bank uses the following tech stack:
+For the dockerized version of Argent Bank, you only need to have Docker installed:
 
-- [Node.js v12](https://nodejs.org/en/)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+- [Docker](https://www.docker.com/get-started)
 
-Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
+Please make sure you have Docker installed and running on your machine. You can verify this by using the following command in your terminal:
 
 ```bash
-# Check Node.js version
-node --version
-
-# Check Mongo version
-mongo --version
+# Check Docker version
+docker --version
 ```
 
 ### Instructions
 
-1. Fork this repo
-1. Clone the repo onto your computer
-1. Open a terminal window in the cloned project
-1. Run the following commands:
+1. Fork this repo.
+2. Clone the repo onto your computer.
+3. Open a terminal window in the cloned project directory.
+4. Run the following commands:
 
 ```bash
-# Install dependencies
-npm install
-
-# Start local dev server
-npm run dev:server
-
-# Populate database with two users
-npm run populate-db
+# Build and start the application and database using Docker
+docker-compose up --build -d
 ```
 
-Your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
+The application will be available on http://localhost:3001 after the build completes.
 
-## Populated Database Data
-
-Once you run the `populate-db` script, you should have two users in your database:
+The database will be populated automatically.
 
 ### Tony Stark
 
