@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  # Mongodb service
+  mongo_db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+
+  # Node api service
+  argentbank_api:
+    depends_on:
+      - mongo_db
+    container_name: argentbank_api
+    build: .
+    ports:
+      # local->container
+      - 3001:3001
+    environment:
+      PORT: 3001
+      DATABASE_URL: 'mongodb://mongo_db/argentBankDB'
