@@ -18,6 +18,9 @@
     "swagger-ui-express": "^4.1.4",
     "yamljs": "^0.3.0"
   },
+  "engines" : {
+    "node" : ">=12.0.0 <13.0.0"
+  },
   "scripts": {
     "dev:server": "nodemon ./server/server.js",
     "populate-db": "node ./server/scripts/populateDatabase.js",
