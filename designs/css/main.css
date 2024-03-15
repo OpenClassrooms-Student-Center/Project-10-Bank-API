@@ -71,7 +71,7 @@ body {
 }
 
 .hero {
-  background-image: url('../img/bank-tree.jpeg');
+  background-image: url("../img/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -289,3 +289,9 @@ body {
     width: 200px;
   }
 }
+
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+} */

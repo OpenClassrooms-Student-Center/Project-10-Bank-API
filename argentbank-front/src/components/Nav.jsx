@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import logo from "../assets/argentBankLogo.png";
 
-export const StyledNav = styled.nav`
+const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px 20px;
-  width: 100%;
+  // width: 100%;
 `;
 
-export const NavLink = styled.a`
+const NavLink = styled.a`
   font-weight: bold;
   color: #2c3e50;
 
@@ -22,12 +22,12 @@ export const NavLink = styled.a`
   }
 `;
 
-export const NavList = styled.ul`
+const NavList = styled.ul`
   display: flex;
   gap: 0.5rem;
 `;
 
-export const LogoImage = styled.img`
+const LogoImage = styled.img`
   max-width: 100%;
   width: 200px;
 `;

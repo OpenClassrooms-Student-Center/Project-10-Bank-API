@@ -112,8 +112,3 @@ button {
   padding: 0;
   width: auto;
 }
-
-#root {
-  display: flex;
-  flex-wrap: wrap;
-}
