@@ -7,10 +7,15 @@ const StyledFooter = styled.footer`
   padding: 2rem 0 1.5rem;
 `;
 
+const StyledFooterText = styled.p`
+  margin: 0;
+  padding: 0;
+`;
+
 const Footer = () => {
   return (
     <StyledFooter>
-      <p>Copyright 2020 Argent Bank</p>
+      <StyledFooterText>Copyright 2020 Argent Bank</StyledFooterText>
     </StyledFooter>
   );
 };
