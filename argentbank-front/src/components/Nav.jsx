@@ -27,11 +27,6 @@ const NavLink = styled.a`
   }
 `;
 
-// const NavList = styled.ul`
-//   display: flex;
-//   gap: 0.5rem;
-// `;
-
 const LogoImage = styled.img`
   max-width: 100%;
   width: 200px;
