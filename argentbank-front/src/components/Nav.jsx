@@ -38,7 +38,7 @@ const Nav = () => {
       <LogoImage src={logo} alt="Logo de ArgentBank" />
       <ul>
         <li>
-          <NavLink href="/link1">
+          <NavLink href="/login">
             <FontAwesomeIcon icon={faCircleUser} />
             Sign In
           </NavLink>

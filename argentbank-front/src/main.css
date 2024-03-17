@@ -21,9 +21,11 @@ html {
 
 /* Set core body defaults */
 body {
-  font-family: var(--font);
   margin: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  font-family: var(--font);
 }
 
 a {
@@ -38,4 +40,10 @@ ul {
 
 li {
   list-style: none;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
