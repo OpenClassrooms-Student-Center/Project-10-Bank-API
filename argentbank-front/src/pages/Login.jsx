@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import * as auth from "../authentication/auth-provider";
+import { useNavigate } from "react-router-dom";
 
 const StyledMain = styled.main`
   background-color: #12002b;
@@ -62,15 +64,34 @@ const StyledSubmitButton = styled.button`
 `;
 
 function Login() {
+  document.title = "Login";
+
+  const navigate = useNavigate();
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const email = data.get("email");
+    const password = data.get("password");
+    try {
+      const token = await auth.login({ email, password });
+      if (token) {
+        auth.setToken(token.token);
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  }
+
   return (
     <StyledMain>
       <StyledLogin>
         <FontAwesomeIcon icon={faCircleUser} />
         <h1>Sign In</h1>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit}>
           <StyledInputWrapper>
-            <StyledLabel htmlFor="username">Username</StyledLabel>
-            <StyledInput type="text" id="username" name="username" />
+            <StyledLabel htmlFor="email">Username</StyledLabel>
+            <StyledInput type="text" id="email" name="email" />
           </StyledInputWrapper>
           <StyledInputWrapper>
             <StyledLabel htmlFor="password">Password</StyledLabel>

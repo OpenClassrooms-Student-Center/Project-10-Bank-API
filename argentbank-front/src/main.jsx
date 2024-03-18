@@ -6,10 +6,12 @@ import "./main.css";
 import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import Login from "./pages/Login.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/login", element: <Login /> },
+  { path: "/profile", element: <Profile /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
