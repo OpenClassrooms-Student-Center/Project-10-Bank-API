@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import * as auth from "../authentication/auth-provider";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const StyledMain = styled.main`
   background-color: #12002b;
@@ -12,20 +11,19 @@ const StyledMain = styled.main`
   justify-content: center;
 `;
 
-async function getUser(token) {
-  const profile = await auth.profile(token);
-  return profile.user;
-}
-
 const Profile = () => {
-  const [user, setUser] = useState(null);
-  const token = auth.getToken();
+  const user = useSelector((state) => state.user);
+  const loggedIn = useSelector((state) => state.loggedIn);
 
-  useEffect(() => {
-    getUser(token).then((data) => setUser(data));
-  }, [token]);
-
-  return <StyledMain>Bonjour {user}</StyledMain>;
+  return (
+    <StyledMain>
+      {loggedIn ? (
+        <h1>Welcome, {user}!</h1>
+      ) : (
+        <h1>Vous devez vous connecter</h1>
+      )}
+    </StyledMain>
+  );
 };
 
 export default Profile;

@@ -1,23 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./main.css";
-import Nav from "./components/Nav.jsx";
-import Footer from "./components/Footer.jsx";
-import Login from "./pages/Login.jsx";
-import Profile from "./pages/Profile.jsx";
-
-const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/login", element: <Login /> },
-  { path: "/profile", element: <Profile /> },
-]);
+// import Home from "./pages/Home.jsx";
+// import Nav from "./components/Nav.jsx";
+// import Footer from "./components/Footer.jsx";
+// import Login from "./pages/Login.jsx";
+// import Profile from "./pages/Profile.jsx";
+import App from "./app/App.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Nav />
-    <RouterProvider router={router}></RouterProvider>
-    <Footer />
+    <App />
   </React.StrictMode>
 );

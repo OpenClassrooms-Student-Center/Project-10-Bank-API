@@ -8,16 +8,22 @@ function setToken(token) {
   localStorage.setItem("argentBank-token", token);
 }
 
+function getUser() {
+  return localStorage.getItem("argentBank-user");
+}
+
+function setUser(user) {
+  localStorage.setItem("argentBank-user", user);
+}
+
 async function logout() {
   localStorage.removeItem("argentBank-token");
+  localStorage.removeItem("argentBank-user");
 }
 
 async function login({ email, password }) {
   const data = await client("login", "POST", { email, password });
-  const result = {
-    token: data.body.token,
-  };
-  return result;
+  return data.body.token;
 }
 
 async function profile(token) {
@@ -45,23 +51,10 @@ async function client(endpoint, method, body, headers) {
     },
   };
 
-  console.log(config);
-
   const response = await fetch(`${API_URL}${endpoint}`, config);
-  // console.log(response);
   const data = await response.json();
   if (response.ok) return data;
   else return Promise.reject(data);
 }
 
-export { login, profile, logout, setToken, getToken };
-
-// login({
-//   email: "tony@stark.com",
-//   password: "password123",
-// });
-// });
-
-// profile(
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjJkODI4M2Y1OGFkNGVkYzBjZTExNSIsImlhdCI6MTcxMDc2Njk5OCwiZXhwIjoxNzEwODUzMzk4fQ.1JHH-jdHip98HLW5_JtxptmlF_MyH2iDCkrArpCrb2Q"
-// );
+export { login, profile, logout, setToken, getToken, setUser, getUser };
