@@ -55,6 +55,12 @@ const Nav = () => {
     navigate("/login");
   }
 
+  function handleClick(event) {
+    event.preventDefault();
+    if (loggedIn) navigate("/profile");
+    else navigate("/login");
+  }
+
   window.addEventListener("storage", (event) => {
     if (event.key === "argentBank-token" && !event.newValue)
       handleSignOut(event);
@@ -66,7 +72,7 @@ const Nav = () => {
       {loggedIn ? (
         <StyledList>
           <li>
-            <NavLink href="/profile">
+            <NavLink href="/profile" onClick={handleClick}>
               <FontAwesomeIcon icon={faCircleUser} />
               {user}
             </NavLink>
@@ -81,7 +87,7 @@ const Nav = () => {
       ) : (
         <StyledList>
           <li>
-            <NavLink href="/login">
+            <NavLink href="/login" onClick={handleClick}>
               <FontAwesomeIcon icon={faCircleUser} />
               Sign In
             </NavLink>

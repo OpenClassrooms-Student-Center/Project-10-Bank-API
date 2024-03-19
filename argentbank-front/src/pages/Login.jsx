@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import * as auth from "../authentication/auth-provider";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Error from "../components/Error";
 
 const StyledMain = styled.main`
@@ -75,11 +75,18 @@ function Login() {
   document.title = "Login";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.loggedIn);
   const [error, setError] = useState({
     username: null,
     password: null,
     other: null,
   });
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/profile");
+    }
+  }, [loggedIn, navigate]);
 
   async function handleSubmit(event) {
     event.preventDefault();
