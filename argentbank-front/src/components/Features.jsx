@@ -10,8 +10,6 @@ const StyledFeatureItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: space-between;
-  // gap: 16px;
 `;
 
 const StyledFeatureItemIcon = styled.img`
@@ -19,7 +17,6 @@ const StyledFeatureItemIcon = styled.img`
   border: 10px solid #00bc77;
   border-radius: 50%;
   padding: 1rem;
-  // margin-bottom: 8px;
   overflow: clip;
 `;
 

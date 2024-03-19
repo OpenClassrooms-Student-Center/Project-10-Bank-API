@@ -283,9 +283,3 @@ body {
     width: 200px;
   }
 }
-
-/* *,
-*::before,
-*::after {
-  box-sizing: border-box;
-} */

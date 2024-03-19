@@ -61,7 +61,6 @@ const Hero = () => {
         <HeroSubtitle>High interest rates.</HeroSubtitle>
         <HeroText>Open a savings account with Argent Bank today!</HeroText>
       </HeroContent>
-      {/* <HeroCover src={HeroCoverImage} alt="" /> */}
     </HeroContainer>
   );
 };
