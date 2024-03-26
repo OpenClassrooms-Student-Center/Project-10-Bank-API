@@ -5,6 +5,7 @@ import { faCircleUser, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as auth from "../authentication/auth-provider";
 import { useNavigate } from "react-router-dom";
+import { getLoggedIn, getUser } from "../app/selectors";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -43,8 +44,8 @@ const StyledList = styled.ul`
 `;
 
 const Nav = () => {
-  const user = useSelector((state) => state.user);
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const user = useSelector(getUser);
+  const loggedIn = useSelector(getLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

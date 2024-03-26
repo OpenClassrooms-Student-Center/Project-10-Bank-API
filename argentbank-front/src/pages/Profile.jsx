@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { getLoggedIn, getUser } from "../app/selectors";
 
 const StyledMain = styled.main`
   background-color: #12002b;
@@ -12,8 +13,8 @@ const StyledMain = styled.main`
 `;
 
 const Profile = () => {
-  const user = useSelector((state) => state.user);
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const user = useSelector(getUser);
+  const loggedIn = useSelector(getLoggedIn);
 
   return (
     <StyledMain>

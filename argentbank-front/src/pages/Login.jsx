@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Error from "../components/Error";
+import { getLoggedIn } from "../app/selectors";
 
 const StyledMain = styled.main`
   background-color: #12002b;
@@ -75,7 +76,7 @@ function Login() {
   document.title = "Login";
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.loggedIn);
+  const loggedIn = useSelector(getLoggedIn);
   const [error, setError] = useState({
     username: null,
     password: null,
