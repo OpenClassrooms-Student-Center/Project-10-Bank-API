@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Error from "../components/Error";
 import { getLoggedIn } from "../app/selectors";
+import Spinner from "../components/Spinner";
+import { set } from "mongoose";
 
 const StyledMain = styled.main`
   background-color: #12002b;
@@ -54,7 +56,7 @@ const StyledRememberLabel = styled.label`
 `;
 
 const StyledSubmitButton = styled.button`
-  display: block;
+  display: flex;
   width: 100%;
   padding: 8px;
   font-size: 1.1rem;
@@ -65,6 +67,8 @@ const StyledSubmitButton = styled.button`
   color: #fff;
   text-decoration: underline;
   cursor: pointer;
+  justify-content: center;
+  gap: 8px;
 `;
 
 async function getUser(token) {
@@ -77,6 +81,7 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector(getLoggedIn);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     username: null,
     password: null,
@@ -90,6 +95,7 @@ function Login() {
   }, [loggedIn, navigate]);
 
   async function handleSubmit(event) {
+    setLoading(true);
     event.preventDefault();
     const data = new FormData(event.target);
     const email = data.get("email");
@@ -99,6 +105,7 @@ function Login() {
       if (token) {
         const user = await getUser(token);
         dispatch({ type: "SET_USER", payload: { user: user, loggedIn: true } });
+        setLoading(false);
         auth.setToken(token);
         auth.setUser(user);
         navigate("/profile");
@@ -120,6 +127,7 @@ function Login() {
           ...error,
           other: "An error occurred, please try again later",
         });
+        setLoading(false);
       }
     }
   }
@@ -152,7 +160,9 @@ function Login() {
             </StyledRememberLabel>
           </StyledRememberDiv>
           {error.other && <Error error={error.other} />}
-          <StyledSubmitButton type="submit">Sign In</StyledSubmitButton>
+          <StyledSubmitButton type="submit">
+            Sign In {loading && <Spinner />}
+          </StyledSubmitButton>
         </StyledForm>
       </StyledLogin>
     </StyledMain>
