@@ -79,7 +79,7 @@ export const updateTransaction = createAsyncThunk(
         data: { body },
       } = await axios.put(Endpoints.transactions.BASE({ transactionId: id }), {
         notes,
-        category,
+        category: category,
       });
 
       dispatch(updateTransactionState(body as Transaction));

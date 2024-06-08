@@ -2,6 +2,19 @@
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover button {
+    color: #42b983;
+    background-color: rgba(66, 185, 131, 0.1);
+  }
+}
+
+.clickable {
+  cursor: pointer;
+  padding-right: 0.5rem;
 }
 
 .default {

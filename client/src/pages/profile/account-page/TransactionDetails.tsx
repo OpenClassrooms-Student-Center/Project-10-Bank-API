@@ -7,6 +7,8 @@ import IconButton from "../../../components/IconButton";
 import Chip from "../../../components/Chip";
 import { useAppDispatch } from "../../../redux/hooks";
 import { updateTransaction } from "../../../redux/transactions/transactionsActions";
+import Select from "../../../components/Select";
+import { TransactionCategory } from "./constants";
 
 type ItemProps = {
   transactionId: string;
@@ -25,13 +27,18 @@ const Item: FC<ItemProps> = ({
   useChip,
   chipColor,
 }) => {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, setValue } = useForm();
   const [isEditing, setIsEditing] = useState(false);
 
   const dispatch = useAppDispatch();
 
   const handleEdit = () => {
     setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setValue("value", value);
   };
 
   const onSubmit = () => {
@@ -72,28 +79,57 @@ const Item: FC<ItemProps> = ({
           className={classes["value-container"]}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Input
-            type="text"
-            formProps={register("value")}
-            inputProps={{ defaultValue: value }}
-            isDirty={!!watch("value")}
-          />
+          {label === "Category" ? (
+            <Select
+              options={Object.values(TransactionCategory)}
+              formProps={register("value")}
+              inputProps={{ defaultValue: value }}
+            />
+          ) : (
+            <Input
+              type="text"
+              formProps={register("value")}
+              inputProps={{ defaultValue: value }}
+              isDirty={!!watch("value")}
+            />
+          )}
           <IconButton
             icon={<i className="fa fa-check" aria-hidden="true"></i>}
             submit
+          />
+          <IconButton
+            icon={<i className="fa fa-times" aria-hidden="true"></i>}
+            onClick={handleCancel}
           />
         </form>
       ) : (
         <div className={classes["value-container"]}>
           {useChip ? (
-            <Chip label={value} type={chipColor} />
+            <Chip
+              onClick={handleEdit}
+              label={
+                label === "Category" ? (
+                  <>
+                    {value}
+                    <IconButton
+                      icon={<i className="fa fa-pencil" aria-hidden="true"></i>}
+                    />
+                  </>
+                ) : (
+                  value
+                )
+              }
+              type={chipColor}
+            />
           ) : (
             <span className={classes["value"]}>{value}</span>
           )}
-          <IconButton
-            icon={<i className="fa fa-pencil" aria-hidden="true"></i>}
-            onClick={handleEdit}
-          />
+          {label !== "Category" && (
+            <IconButton
+              icon={<i className="fa fa-pencil" aria-hidden="true"></i>}
+              onClick={handleEdit}
+            />
+          )}
         </div>
       )}
     </div>
