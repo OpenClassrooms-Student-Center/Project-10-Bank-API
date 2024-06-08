@@ -13,7 +13,13 @@ type EndpointsType = {
     PROFILE: Endpoint;
   };
   transactions: {
-    BASE: (userId: string) => Endpoint;
+    BASE: ({
+      userId,
+      transactionId,
+    }: {
+      userId?: string;
+      transactionId?: string;
+    }) => Endpoint;
   };
 };
 
@@ -24,9 +30,15 @@ export const Endpoints: EndpointsType = {
     PROFILE: `${prefixes.base}${prefixes.user}/profile`,
   },
   transactions: {
-    BASE: (userId?: string) =>
+    BASE: ({
+      userId,
+      transactionId,
+    }: {
+      userId?: string;
+      transactionId?: string;
+    }) =>
       `${prefixes.base}user${userId ? `/${userId}` : ""}${
         prefixes.transactions
-      }`,
+      }${transactionId ? `/${transactionId}` : ""}`,
   },
 };
