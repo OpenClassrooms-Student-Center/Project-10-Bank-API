@@ -24,7 +24,9 @@ export const Endpoints: EndpointsType = {
     PROFILE: `${prefixes.base}${prefixes.user}/profile`,
   },
   transactions: {
-    BASE: (userId: string) =>
-      `${prefixes.base}${prefixes.transactions}/user/${userId}`,
+    BASE: (userId?: string) =>
+      `${prefixes.base}user${userId ? `/${userId}` : ""}${
+        prefixes.transactions
+      }`,
   },
 };

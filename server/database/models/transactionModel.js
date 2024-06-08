@@ -46,7 +46,7 @@ const transactionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      required: false,
+      required: true,
     },
     createdAt: {
       type: Date,

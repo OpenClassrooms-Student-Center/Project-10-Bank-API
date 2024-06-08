@@ -11,6 +11,10 @@ const createPspReference = () => {
   );
 };
 
+const getTransactionType = () => {
+  return Math.random() > 0.5 ? "INCOME" : "EXPENSE";
+};
+
 module.exports.createTransaction = async (serviceData) => {
   try {
     console.log(serviceData.headers.authorization);
@@ -24,6 +28,22 @@ module.exports.createTransaction = async (serviceData) => {
     }
 
     const user = await User.findOne({ _id: serviceData.body.userId });
+    const transactions = await Transaction.find({
+      userId: serviceData.body.userId,
+      accountId: serviceData.body.accountId,
+    });
+
+    let balanceLeft = 0;
+
+    if (transactions.length > 0) {
+      balanceLeft = transactions.reduce(
+        (acc, transaction) =>
+          transaction.type === "INCOME"
+            ? acc + transaction.amount
+            : acc - transaction.amount,
+        0
+      );
+    }
 
     if (!user) {
       throw new Error("User not found!");
@@ -33,7 +53,7 @@ module.exports.createTransaction = async (serviceData) => {
       userId: user._id,
       accountId: serviceData.body.accountId,
       accountName: serviceData.body.accountName,
-      balanceLeft: user.balanceLeft || 0,
+      balanceLeft,
       createdAt: new Date(),
       updatedAt: new Date(),
       ...(serviceData.body.description
@@ -49,7 +69,7 @@ module.exports.createTransaction = async (serviceData) => {
         : { notes: "No notes" }),
       pspReference: createPspReference(),
       status: "PENDING",
-      type: serviceData.body.type,
+      type: getTransactionType(),
     });
 
     const result = await newTransaction.save();

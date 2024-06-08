@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { getAxiosInstance } from "../../utils";
-// import { Endpoints } from "../../api/endpoints";
 import { Transaction } from "../../types/transactions";
 import { AxiosError } from "axios";
-import { transactionsMock } from "../../mocks/transactions.mock";
 import { RootState } from "../store";
 import { addNotificationToQueue } from "../app/appSlice";
+import { getAxiosInstance } from "../../utils/apiHelpers";
+import { Endpoints } from "../api/endpoints";
 
 // Uncomment the following line when you are ready to connect to the backend
 
@@ -14,29 +13,23 @@ export const getTransactions = createAsyncThunk(
   async (_, { rejectWithValue, getState, dispatch }) => {
     const {
       user,
-      // auth: {
-      //   data: { token },
-      // },
+      auth: {
+        data: { token },
+      },
     } = getState() as RootState;
 
     try {
-      // const axios = getAxiosInstance({ withAuth: true, storedToken: token });
+      const axios = getAxiosInstance({ withAuth: true, storedToken: token });
 
       if (!user?.data?.id) {
         throw new Error("User ID not found");
       }
 
-      //   const {
-      //       data: { body },
-      //   } = await axios.get(Endpoints.transactions.BASE(user?.data?.id));
+      const {
+        data: { body },
+      } = await axios.get(Endpoints.transactions.BASE(user?.data?.id));
 
-      // return body as Transaction[];
-
-      const transactions = transactionsMock.filter(
-        (transaction) => transaction.userId === user?.data?.id
-      ) as Transaction[];
-
-      return transactions;
+      return body as Transaction[];
     } catch (error) {
       const err = error as AxiosError;
 
