@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+ 
+.hero {
+  background-image: url('../src/assets/images/bank-tree.jpeg');
+  background-position: 0 -50px;
+}
+
+@media (min-width:720px) {
+  .hero {
+    background-position: 0 33%;
+  }
+}
+
+/* h1, h2 {
+  font-family: "Cormorant Upright", serif;
+  font-weight: 600;
+  font-style: normal;
+  font-optical-sizing: auto;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 28px;
+} */
