@@ -15,15 +15,15 @@ export const fetchUserAccounts = async (userId) => {
       throw new Error('Accounts not found');
     }
 
-    const filteredAccountsById = datas.find(
-      (userAccounts) => userAccounts.userId === userId
+    const filteredAccountsById = datas.filter(
+      (account) => account.userId === userId
     );
 
-    if (!filteredAccountsById) {
+    if (filteredAccountsById.length === 0) {
       throw new Error(`Accounts for user not found`);
     }
 
-    return { body: filteredAccountsById.accounts };
+    return { body: filteredAccountsById };
   } catch (error) {
     throw new Error(error);
   }
