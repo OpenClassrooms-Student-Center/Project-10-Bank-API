@@ -7,7 +7,7 @@ import callApi from './apiClient';
  * @returns {Promise<object>} - Promise resolving to the API response data.
  * @throws {Error} - Throws an error if email or password is missing or if login fails.
  */
-export const postLogin = async (email, password) => {
+export const postLogin = async ({ email, password }) => {
   try {
     if (!email || !password) {
       throw new Error('Username and password are required');

@@ -1,23 +1,18 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { postProfile, updateProfile } from '../services/profileAPI';
+import {
+  createThunkAction,
+  handleAsyncActions,
+} from '../utils/slicerFunctions';
 
 const POST_PROFILE = 'profile/postProfile';
 const UPDATE_PROFILE = 'profile/updateProfile';
 
-export const postProfileAsync = createAsyncThunk(
-  POST_PROFILE,
-  async (token) => {
-    const response = await postProfile(token);
-    return response;
-  }
-);
+export const postProfileAsync = createThunkAction(POST_PROFILE, postProfile);
 
-export const updateProfileAsync = createAsyncThunk(
+export const updateProfileAsync = createThunkAction(
   UPDATE_PROFILE,
-  async ({ token, firstName, lastName }) => {
-    const response = await updateProfile({ token, firstName, lastName });
-    return response;
-  }
+  updateProfile
 );
 
 // Redux slice for profile state management
@@ -34,37 +29,20 @@ export const profileSlice = createSlice({
       state.updateStatus = 'idle';
       state.error = null;
     },
+    clearProfile: (state) => {
+      // clear profile when logout
+      state.profile = null;
+      state.status = 'idle';
+      state.error = null;
+      state.updateStatus = 'idle';
+      sessionStorage.removeItem('profile');
+    },
   },
   extraReducers: (builder) => {
     // Extra reducers to handle async actions (postProfileAsync)
-    builder
-      .addCase(POST_PROFILE + '/pending', (state) => {
-        state.status = 'loading';
-      })
-      .addCase(POST_PROFILE + '/fulfilled', (state, action) => {
-        state.status = 'succeeded';
-        state.profile = action.payload.body;
-        state.error = null;
-        sessionStorage.setItem('profile', JSON.stringify(state.profile));
-      })
-      .addCase(POST_PROFILE + '/rejected', (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
-      // Extra reducers to handle async actions (updateProfileAsync)
-      .addCase(UPDATE_PROFILE + '/pending', (state) => {
-        state.updateStatus = 'loading';
-      })
-      .addCase(UPDATE_PROFILE + '/fulfilled', (state, action) => {
-        state.updateStatus = 'succeeded';
-        state.profile = action.payload.body;
-        state.error = null;
-        sessionStorage.setItem('profile', JSON.stringify(state.profile));
-      })
-      .addCase(UPDATE_PROFILE + '/rejected', (state, action) => {
-        state.updateStatus = 'failed';
-        state.error = action.error.message;
-      });
+    handleAsyncActions(builder, postProfileAsync, 'profile', 'status');
+    // Extra reducers to handle async actions (updateProfileAsync)
+    handleAsyncActions(builder, updateProfileAsync, 'profile', 'updateStatus');
   },
   selectors: {
     selectProfile: (state) => state.profile,
@@ -73,7 +51,7 @@ export const profileSlice = createSlice({
     selectProfileUpdateStatus: (state) => state.updateStatus,
   },
 });
-export const { resetUpdateStatus } = profileSlice.actions;
+export const { resetUpdateStatus, clearProfile } = profileSlice.actions;
 export const {
   selectProfile,
   selectProfileStatus,

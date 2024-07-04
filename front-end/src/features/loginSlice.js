@@ -1,15 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { postLogin } from '../services/loginAPI';
+import {
+  createThunkAction,
+  handleAsyncActions,
+} from '../utils/slicerFunctions';
 
 const POST_LOGIN = 'login/postLogin';
 
-export const postLoginAsync = createAsyncThunk(
-  POST_LOGIN,
-  async ({ email, password }) => {
-    const response = await postLogin(email, password);
-    return response;
-  }
-);
+export const postLoginAsync = createThunkAction(POST_LOGIN, postLogin);
 
 // Redux slice for login state management
 export const loginSlice = createSlice({
@@ -29,20 +27,7 @@ export const loginSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Extra reducers to handle async actions (postLoginAsync)
-    builder
-      .addCase(POST_LOGIN + '/pending', (state) => {
-        state.status = 'loading';
-      })
-      .addCase(POST_LOGIN + '/fulfilled', (state, action) => {
-        state.status = 'succeeded';
-        state.login = action.payload.body;
-        state.error = null;
-        sessionStorage.setItem('login', JSON.stringify(state.login));
-      })
-      .addCase(POST_LOGIN + '/rejected', (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
+    handleAsyncActions(builder, postLoginAsync, 'login', 'status');
   },
   selectors: {
     selectLogin: (state) => state.login,

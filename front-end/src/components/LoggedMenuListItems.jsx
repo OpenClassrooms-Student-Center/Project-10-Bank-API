@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../features/loginSlice';
-import { selectProfile } from '../features/profileSlice';
+import { clearProfile, selectProfile } from '../features/profileSlice';
+import { clearAccounts } from '../features/accountsSlice';
 
 /**
  * A React functional component that displays menu when user is connected.
@@ -23,6 +24,8 @@ const LoggedMenuListItems = () => {
   }, [profile, userFirstName]);
 
   const logoutUser = () => {
+    dispatch(clearAccounts());
+    dispatch(clearProfile());
     // Update the profile states from the Redux store
     dispatch(logout());
   };

@@ -23,7 +23,7 @@ const UpdateProfileForm = ({ toggleUpdateProfileForm }) => {
 
   // Get profile states from the Redux store
   const profile = useSelector((state) => selectProfile(state));
-  const profileStatus = useSelector((state) =>
+  const profileUpdateStatus = useSelector((state) =>
     selectProfileUpdateStatus(state)
   );
   const profileError = useSelector((state) => selectProfileError(state));
@@ -34,23 +34,26 @@ const UpdateProfileForm = ({ toggleUpdateProfileForm }) => {
   const [firstName, setFirstName] = useState(profile.firstName);
   const [lastName, setLastName] = useState(profile.lastName);
 
-  // when form is opened, status must do 'idle' to prevent any side effect
-  useEffect(() => {
-    dispatch(resetUpdateStatus());
-  }, [dispatch]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateProfileAsync({ token: login.token, firstName, lastName }));
     // dispatch(updateProfileAsync({ firstName, lastName })); // test error
-    if (profileStatus === 'succeeded') {
-      toggleUpdateProfileForm();
-    }
   };
 
   const handleCancel = () => {
     toggleUpdateProfileForm();
   };
+
+  // when form is opened, status must do 'idle' to prevent any side effect
+  useEffect(() => {
+    dispatch(resetUpdateStatus());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (profileUpdateStatus === 'succeeded') {
+      toggleUpdateProfileForm();
+    }
+  }, [profileUpdateStatus, toggleUpdateProfileForm]);
 
   return (
     <>
@@ -59,7 +62,7 @@ const UpdateProfileForm = ({ toggleUpdateProfileForm }) => {
           id='firstName'
           type='text'
           className={`input__update left ${
-            profileStatus === 'failed' && 'input__error'
+            profileUpdateStatus === 'failed' && 'input__error'
           }`}
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -69,7 +72,7 @@ const UpdateProfileForm = ({ toggleUpdateProfileForm }) => {
           id='lastName'
           type='text'
           className={`input__update right ${
-            profileStatus === 'failed' && 'input__error'
+            profileUpdateStatus === 'failed' && 'input__error'
           }`}
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -79,20 +82,20 @@ const UpdateProfileForm = ({ toggleUpdateProfileForm }) => {
         <button
           type='submit'
           className='update-button  left'
-          disabled={profileStatus === 'loading'}
+          disabled={profileUpdateStatus === 'loading'}
         >
-          {profileStatus === 'loading' ? 'Save...' : 'Save'}
+          {profileUpdateStatus === 'loading' ? 'Save...' : 'Save'}
         </button>
         <button
           type='button'
           className='update-button right'
           onClick={handleCancel}
-          disabled={profileStatus === 'loading'}
+          disabled={profileUpdateStatus === 'loading'}
         >
           Cancel
         </button>
       </form>
-      {profileStatus === 'failed' && (
+      {profileUpdateStatus === 'failed' && (
         <p className='error-message'>{profileError}</p>
       )}
     </>

@@ -1,48 +1,46 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchUserAccounts } from '../services/accountsAPI';
+import {
+  createThunkAction,
+  handleAsyncActions,
+} from '../utils/slicerFunctions';
 
 const GET_ACCOUNTS = 'accounts/fetchAccounts';
 
-export const fetchAccountsAsync = createAsyncThunk(
+export const fetchAccountsAsync = createThunkAction(
   GET_ACCOUNTS,
-  async (userId) => {
-    const accounts = await fetchUserAccounts(userId);
-    return accounts;
-  }
+  fetchUserAccounts
 );
 
 // Redux slice for accounts state management
 export const accountsSlice = createSlice({
   name: 'accounts',
   initialState: {
-    value: [],
+    accounts: JSON.parse(sessionStorage.getItem('accounst')) || null,
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    clearAccounts: (state) => {
+      // clear accounts when logout
+      state.accounts = null;
+      state.status = 'idle';
+      state.error = null;
+      sessionStorage.removeItem('accounts');
+    },
+  },
   extraReducers: (builder) => {
     // Extra reducers to handle async actions (fetchUserAccounts)
-    builder
-      .addCase(GET_ACCOUNTS + '/pending', (state) => {
-        state.status = 'loading';
-      })
-      .addCase(GET_ACCOUNTS + '/fulfilled', (state, action) => {
-        state.status = 'succeeded';
-        state.value = action.payload;
-        state.error = null;
-      })
-      .addCase(GET_ACCOUNTS + '/rejected', (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
+    handleAsyncActions(builder, fetchAccountsAsync, 'accounts', 'status');
   },
   selectors: {
-    selectAccounts: (state) => state.value,
+    selectAccounts: (state) => state.accounts,
     selectAccountsStatus: (state) => state.status,
     selectAccountsError: (state) => state.error,
   },
 });
 
+export const { clearAccounts } = accountsSlice.actions;
 export const { selectAccounts, selectAccountsStatus, selectAccountsError } =
   accountsSlice.selectors;
 

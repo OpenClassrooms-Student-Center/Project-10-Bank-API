@@ -29,12 +29,12 @@ const Profile = () => {
 
   // Effect to fetch user accounts data when profile data changes
   useEffect(() => {
-    if (profile) {
+    if (login && profile) {
       dispatch(fetchAccountsAsync(profile.id));
       // Uncomment below line for testing error state:
       // dispatch(fetchAccountsAsync(1234));
     }
-  }, [profile, dispatch]);
+  }, [login, profile, dispatch]);
 
   return (
     <PageLayout mainClassName='main bg-dark'>
