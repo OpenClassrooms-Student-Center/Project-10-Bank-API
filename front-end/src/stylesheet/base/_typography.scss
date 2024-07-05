@@ -1,0 +1,126 @@
+/****************************************************** fonts */
+html {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/****************************************************** colors */
+html,
+.nav a {
+  color: $text-color;
+}
+.account__transaction-button,
+.sign-in__button,
+.profile__header {
+  color: $white;
+}
+
+.feature__item-title {
+  color: $h3-title-color;
+}
+
+.nav a .router-link-exact-active {
+  //TODO where ?
+  color: #42b983;
+}
+.profile__header .edit-button {
+  color: $white;
+}
+
+.update-button {
+  color: $purple;
+}
+
+.input__update input {
+  color: $grey;
+}
+
+.error-message {
+  color: $text-error;
+}
+
+/***************************************** font weight */
+.account__title {
+  font-weight: normal;
+}
+
+.account__amount,
+.account__transaction-button,
+.feature__item-title,
+.input__wrapper label,
+.hero__content-subtitle,
+.nav__item-text,
+.sign-in__button,
+.profile__header .edit-button,
+.update-button,
+.input__update input {
+  font-weight: bold;
+}
+
+/***************************************** font size */
+.nav__item {
+  &-text {
+    font-size: 0.8rem;
+    @include min-media-breakpoint($breakpoint-mobileXl) {
+      font-size: 1rem;
+    }
+  }
+  .icon {
+    font-size: 0.8rem;
+    @include min-media-breakpoint($breakpoint-mobileXl) {
+      font-size: 1.4rem;
+    }
+  }
+}
+.account__title,
+.hero__content-subtitles {
+  font-size: 1rem;
+}
+
+.account__transaction-button,
+.sign-in__button {
+  font-size: 1.1rem;
+}
+
+.account__amount {
+  font-size: 2.5rem;
+}
+
+.feature__item-title {
+  font-size: 1.25rem;
+}
+
+.input__wrapper input {
+  font-size: 1.2rem;
+}
+
+.hero__content {
+  &-text {
+    font-size: 0.9rem;
+  }
+  @include min-media-breakpoint($breakpoint-laptop) {
+    &-subtitle {
+      font-size: 1.5rem;
+    }
+
+    &-text {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.sign-in__icon {
+  font-size: 5rem;
+}
+
+/***************************************** text align */
+html {
+  text-align: center;
+}
+
+.account,
+.input__wrapper,
+.hero__content {
+  text-align: left;
+}

@@ -1,0 +1,7 @@
+.features {
+  @include flex-col;
+
+  @include min-media-breakpoint($breakpoint-laptop) {
+    flex-direction: row;
+  }
+}

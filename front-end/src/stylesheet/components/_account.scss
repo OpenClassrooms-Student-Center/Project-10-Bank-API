@@ -1,0 +1,48 @@
+.account {
+  @include flex-col;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  background-color: $white;
+  width: 80%;
+  margin: 0 auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+
+  &__amount,
+  &__amount-description {
+    margin: 0;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__content-wrapper {
+    width: 100%;
+    flex: 1;
+  }
+
+  &__transaction-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 1rem;
+    border-color: $main-brand-color;
+    background-color: $main-brand-color;
+  }
+
+  @include min-media-breakpoint($breakpoint-tablet) {
+    flex-direction: row;
+
+    .cta {
+      flex: 0;
+    }
+
+    &__transaction-button {
+      width: 200px;
+    }
+  }
+}

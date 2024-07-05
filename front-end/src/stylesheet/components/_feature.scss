@@ -1,0 +1,17 @@
+.feature {
+  &__icon {
+    width: 100px;
+    border: 10px solid $main-brand-color;
+    border-radius: 50%;
+    padding: 1rem;
+  }
+
+  &__item {
+    flex: 1;
+    padding: 2.5rem;
+
+    &-title {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

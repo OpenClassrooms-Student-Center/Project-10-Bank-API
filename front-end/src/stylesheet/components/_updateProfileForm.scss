@@ -1,0 +1,31 @@
+.update-profile-form {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  grid-template-rows: repeat(4, 1fr);
+  margin: 25px auto 0;
+  width: fit-content;
+
+  .update-button {
+    justify-self: center;
+    background-color: $white;
+    border: 1px solid $purple;
+    border-radius: 3px;
+    height: fit-content;
+    padding: 8px 50px;
+    width: 100%;
+  }
+  @include min-media-breakpoint($breakpoint-mobileXl) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    .update-button {
+      width: fit-content;
+    }
+    .left {
+      justify-self: flex-end;
+    }
+    .right {
+      justify-self: flex-start;
+    }
+  }
+}
