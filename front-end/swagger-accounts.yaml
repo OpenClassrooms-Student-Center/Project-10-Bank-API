@@ -15,7 +15,7 @@ paths:
         - Bearer: []
       tags:
         - Accounts Module
-      summary: Get user's accounts
+      summary: Get all user's accounts
       description: Returns all user's accounts into an array
       parameters:
         - in: header
@@ -23,8 +23,8 @@ paths:
           description: Attach Bearer JWT token
           required: true
           type: string
-        - name: userId
-          in: path
+        - in: path
+          name: userId
           description: ID of user
           required: true
           type: string
@@ -42,23 +42,23 @@ paths:
         '500':
           description: Internal Server Error
 
-  /accounts/transactions/{idAccount}:
+  /accounts/{userId}/transactions:
     get:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
-      summary: Get all user's transactions of an account
-      description: Returns all user's transactions of an account into an array
+        - Transactions Module
+      summary: Get all user's transactions
+      description: Returns all user's transactions
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
           type: string
-        - name: idAccount
-          in: path
-          description: ID of account
+        - in: path
+          name: userId
+          description: ID of user
           required: true
           type: string
       responses:
@@ -75,48 +75,82 @@ paths:
         '500':
           description: Internal Server Error
 
-  /accounts/transaction/addTransaction/{idAccount}:
-    post:
+  /accounts/{idAccount}/transactions/{month}:
+    get:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
-      summary: Post a transaction to user account
-      description: Add a transaction to user account
+        - Transactions Module
+      summary: Get all user's transactions of an account, for specific month
+      description: Returns all user's transactions of an account into an array, for specific month
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
           type: string
-        - name: idAccount
-          in: path
+        - in: path
+          name: idAccount
           description: ID of account
           required: true
           type: string
-        - in: body
-          name: body
-          description: Transaction info needed to create a new transaction
+        - in: path
+          name: month
+          description: Month of transactions to view
           required: true
-          schema:
-            $ref: '#/definitions/PostTransaction'
+          type: string
+
       responses:
         '200':
-          description: Transaction added successfully
+          description: User account transactions retrieved successfully
           schema:
-            $ref: '#/definitions/ApiTransactionResponse'
+            $ref: '#/definitions/ApiTransactionsResponse'
         '400':
-          description: Invalid Fields
+          description: Invalid Id supplied
         '401':
           description: Unauthorized
+        '404':
+          description: transactions not found
         '500':
           description: Internal Server Error
+
+  # /accounts/transaction:
+  # post:
+  #   security:
+  #     - Bearer: []
+  #   tags:
+  #     - Transaction Module
+  #   summary: Post a transaction to user account
+  #   description: Add a transaction to user account
+  #   parameters:
+  #     - in: header
+  #       name: Authorization
+  #       description: Attach Bearer JWT token
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: Transaction info needed to create a new transaction
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/PostTransaction'
+  #   responses:
+  #     '201':
+  #       description: Transaction added successfully
+  #       schema:
+  #         $ref: '#/definitions/ApiTransactionResponse'
+  #     '400':
+  #       description: Invalid Fields
+  #     '401':
+  #       description: Unauthorized
+  #     '500':
+  #       description: Internal Server Error
   /accounts/transaction/{idTransaction}:
     get:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
+        - Transaction Module
       summary: Get a user's transaction
       description: Returns one user's transaction
       parameters:
@@ -143,12 +177,81 @@ paths:
           description: transaction not found
         '500':
           description: Internal Server Error
+    # put:
+    #   security:
+    #     - Bearer: []
+    #   tags:
+    #     - Accounts Module
+    #   summary: Update a user's transaction informations (category or notes)
+    #   description: Returns one user's transaction
+    #   parameters:
+    #     - in: header
+    #       name: Authorization
+    #       description: Attach Bearer JWT token
+    #       required: true
+    #       type: string
+    #     - name: idTransaction
+    #       in: path
+    #       description: ID of transaction
+    #       required: true
+    #       type: string
+    #     - in: body
+    #       name: body
+    #       description: Add transaction category
+    #       required: true
+    #       schema:
+    #         $ref: '#/definitions/EditTransaction'
+    #   responses:
+    #     '200':
+    #       description: User transaction updated successfully
+    #       schema:
+    #         $ref: '#/definitions/ApiTransactionResponse'
+    #     '400':
+    #       description: Invalid Id supplied
+    #     '401':
+    #       description: Unauthorized
+    #     '404':
+    #       description: transaction not found
+    #     '500':
+    #       description: Internal Server Error
+
+    # delete:
+    #   security:
+    #     - Bearer: []
+    #   tags:
+    #     - Accounts Module
+    #   summary: Delete a user's transaction
+    #   description: Delete one user transaction
+    #   parameters:
+    #     - in: header
+    #       name: Authorization
+    #       description: Attach Bearer JWT token
+    #       required: true
+    #       type: string
+    #     - name: idTransaction
+    #       in: path
+    #       description: ID of transaction
+    #       required: true
+    #       type: string
+    #   responses:
+    #     '204':
+    #       description: User account transaction deleted successfully
+    #       schema:
+    #         $ref: '#/definitions/ApiDeleteResponse'
+    #     '400':
+    #       description: Invalid Fields
+    #     '401':
+    #       description: Unauthorized
+    #     '500':
+    #       description: Internal Server Error
+
+  /accounts/transaction/{idTransaction}/category:
     put:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
-      summary: Update a user's transaction
+        - Transaction Category Module
+      summary: Update category of a transaction
       description: Returns one user's transaction
       parameters:
         - in: header
@@ -163,31 +266,30 @@ paths:
           type: string
         - in: body
           name: body
-          description: Add transaction category
+          description: update transaction category
           required: true
           schema:
-            $ref: '#/definitions/EditTransaction'
+            $ref: '#/definitions/APICategoryTransaction'
       responses:
         '200':
-          description: User transaction updated successfully
+          description: User account transaction category updated successfully
           schema:
             $ref: '#/definitions/ApiTransactionResponse'
         '400':
-          description: Invalid Id supplied
+          description: Invalid Fields
         '401':
           description: Unauthorized
-        '404':
-          description: transaction not found
         '500':
           description: Internal Server Error
 
-    delete:
+  /accounts/transaction/{idTransaction}/notes:
+    post:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
-      summary: Delete a user's transaction
-      description: Delete one user transaction
+        - Transaction Notes Module
+      summary: Create note for a transaction
+      description: Returns one user's transaction
       parameters:
         - in: header
           name: Authorization
@@ -199,11 +301,92 @@ paths:
           description: ID of transaction
           required: true
           type: string
+        - in: body
+          name: body
+          description: Add transaction notes
+          required: true
+          schema:
+            $ref: '#/definitions/APINotesTransaction'
+      responses:
+        '201':
+          description: User account transaction notes created successfully
+          schema:
+            $ref: '#/definitions/ApiTransactionResponse'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /accounts/transaction/{idTransaction}/notes/{noteId}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Notes Module
+      summary: Update note of a transaction
+      description: Returns one user's transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: idTransaction
+          description: ID of transaction
+          required: true
+          type: string
+        - in: path
+          name: noteId
+          description: ID of note
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: update transaction notes
+          required: true
+          schema:
+            $ref: '#/definitions/APINotesTransaction'
+      responses:
+        '200':
+          description: User account transaction notes updated successfully
+          schema:
+            $ref: '#/definitions/ApiTransactionResponse'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Notes Module
+      summary: Delete note of a transaction
+      description: API for deleted note of a user transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: idTransaction
+          in: path
+          description: ID of transaction
+          required: true
+          type: string
+        - in: path
+          name: noteId
+          description: ID of note
+          required: true
+          type: string
       responses:
         '204':
-          description: User account transaction deleted successfully
+          description: User account note deleted successfully
           schema:
-            $ref: '#/definitions/ApiDeleteResponse'
+            $ref: '#/definitions/ApiTransactionResponse'
         '400':
           description: Invalid Fields
         '401':
@@ -240,9 +423,6 @@ definitions:
   Transaction:
     type: object
     properties:
-      userId:
-        type: string
-        description: Id of the user owner account
       accountId:
         type: string
         description: Referrer account id
@@ -267,48 +447,67 @@ definitions:
         type: string
         description: Category of the transaction
       notes:
-        type: string
+        type: array
         description: Notes about the transaction
+        items:
+          type: object
+          properties:
+            noteId:
+              type: string
+              description: ID of the note
+            content:
+              type: string
+              description: Content of the note
 
-  PostTransaction:
+  # PostTransaction:
+  #   type: object
+  #   properties:
+  #     accountId:
+  #       type: string
+  #       description: Referrer account id
+  #     date:
+  #       type: string
+  #       format: date
+  #       description: Date of transaction
+  #     description:
+  #       type: string
+  #       description: Description of the transaction
+  #     amount:
+  #       type: number
+  #       format: float
+  #       description: Amount of the transaction
+  #     type:
+  #       type: string
+  #       description: Type of the transaction
+  #     category:
+  #       type: string
+  #       description: Category of the transaction
+  #     notes:
+  #       type: array
+  #       description: Notes about the transaction
+  #       items:
+  #         type: object
+  #         properties:
+  #           noteId:
+  #             type: string
+  #             description: ID of the note
+  #           content:
+  #             type: string
+  #             description: Content of the note
+
+  APICategoryTransaction:
     type: object
     properties:
-      userId:
-        type: string
-        description: Id of the user owner account
-      accountId:
-        type: string
-        description: Referrer account id
-      date:
-        type: string
-        format: date
-        description: Date of transaction
-      description:
-        type: string
-        description: Description of the transaction
-      amount:
-        type: number
-        format: float
-        description: Amount of the transaction
-      type:
-        type: string
-        description: Type of the transaction
       category:
         type: string
         description: Category of the transaction
-      notes:
-        type: string
-        description: Notes about the transaction
 
-  EditTransaction:
+  APINotesTransaction:
     type: object
     properties:
-      category:
+      note:
         type: string
-        description: Category of the transaction
-      notes:
-        type: string
-        description: Notes about the transaction
+        description: Note about the transaction
 
   ApiAccountsResponse:
     type: object
@@ -344,9 +543,6 @@ definitions:
       body:
         type: object
         properties:
-          userId:
-            type: string
-            description: Id of the user owner account
           accountId:
             type: string
             description: Referrer account id
@@ -371,8 +567,17 @@ definitions:
             type: string
             description: Category of the transaction
           notes:
-            type: string
+            type: array
             description: Notes about the transaction
+            items:
+              type: object
+              properties:
+                noteId:
+                  type: string
+                  description: ID of the note
+                content:
+                  type: string
+                  description: Content of the note
 
   ApiDeleteResponse:
     type: object
