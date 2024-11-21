@@ -1,0 +1,30 @@
+html {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: hidden;
+}
+
+/* style scrollbar */
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #2c3e50;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}

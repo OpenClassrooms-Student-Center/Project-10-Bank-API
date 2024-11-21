@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
+}
+
+.shadow {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.footer-text {
+  margin: 0;
+  padding: 0;
+}

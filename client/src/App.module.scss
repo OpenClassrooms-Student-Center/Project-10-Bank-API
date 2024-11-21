@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.bg-dark {
+  background-color: #12002b;
+}
+
+.loader {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 32px;
+    color: #42b983;
+  }
+}

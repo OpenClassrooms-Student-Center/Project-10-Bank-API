@@ -1,0 +1,65 @@
+.root {
+  position: relative;
+  padding: 1.5rem;
+  background-color: white;
+  color: rgb(44, 62, 80);
+  box-sizing: border-box;
+  width: 80%;
+  display: flex;
+  border-radius: 0.3rem;
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  @media (max-width: 375px) {
+    padding: 1rem;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+  }
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.right-section {
+  display: flex;
+  align-items: flex-end;
+
+  a {
+    height: fit-content;
+    text-decoration: none;
+  }
+
+  @media (max-width: 375px) {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
+
+.balance {
+  font-size: 2.5rem;
+  font-weight: bold;
+
+  @media (max-width: 375px) {
+    font-size: 1.5rem !important;
+  }
+}

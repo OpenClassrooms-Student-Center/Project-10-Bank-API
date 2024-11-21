@@ -1,0 +1,47 @@
+.root {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: fit-content;
+
+  @media (max-width: 768px) {
+    padding: 0.25rem 0.5rem;
+  }
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover button {
+    color: #42b983;
+    background-color: rgba(66, 185, 131, 0.1);
+  }
+}
+
+.clickable {
+  cursor: pointer;
+  padding-right: 0.5rem;
+}
+
+.default {
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+.success {
+  color: #1b5e20;
+  background-color: #e8f5e9;
+}
+
+.error {
+  color: #b71c1c;
+  background-color: #ffebee;
+}
+
+.warning {
+  color: #f57f17;
+  background-color: #fff3e0;
+}
+
+.info {
+  color: #1976d2;
+  background-color: #e3f2fd;
+}

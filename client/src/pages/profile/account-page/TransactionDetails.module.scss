@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.57rem;
+}
+
+.item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 50px;
+
+  .label {
+    font-weight: 600;
+  }
+}
+
+.value-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    input {
+      font-size: 0.8rem;
+      max-width: 100px;
+    }
+  }
+}

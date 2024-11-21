@@ -1,0 +1,19 @@
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.transactions {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  padding: 2rem 22px 2rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem 6px 1rem 1rem;
+  }
+}

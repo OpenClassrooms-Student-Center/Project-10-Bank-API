@@ -1,0 +1,42 @@
+.root {
+  position: relative;
+  box-sizing: border-box;
+  width: fit-content;
+
+  &::after {
+    content: "▼";
+    font-size: 1rem;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    transition: color 0.15s ease-in-out;
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::after {
+      color: #42b983;
+    }
+    .select {
+      border-color: #42b983;
+    }
+  }
+}
+
+.select {
+  appearance: none;
+  padding: 0.5rem;
+  padding-right: 30px;
+  border: 2px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: #42b983;
+  }
+}

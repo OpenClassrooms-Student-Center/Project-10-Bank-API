@@ -1,0 +1,57 @@
+.root {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate {
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.notification {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  p {
+    margin: 0;
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+.info {
+  background-color: #3a8ef4;
+  color: white;
+}
+
+.error {
+  background-color: #f44336;
+  color: white;
+}
+
+.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.warning {
+  background-color: #ffa726;
+  color: white;
+}

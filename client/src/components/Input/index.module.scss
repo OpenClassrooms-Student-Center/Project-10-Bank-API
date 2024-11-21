@@ -1,0 +1,104 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5rem;
+
+  input {
+    padding: 5px;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    border-style: solid;
+
+    &:hover {
+      border-color: #42b983;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #42b983;
+
+      & + .label-default {
+        top: -0.5rem;
+        left: 0.5rem;
+        font-size: 0.8rem;
+        background: linear-gradient(0deg, white 50%, transparent 50%);
+        padding: 0 0.2rem;
+        color: #42b983;
+      }
+    }
+  }
+}
+
+.is-focused {
+  color: #42b983;
+  text-decoration: underline;
+}
+
+.is-fulfilled {
+  position: absolute;
+  top: -0.5rem !important;
+  left: 0.5rem !important;
+  font-size: 0.8rem;
+  background-color: white;
+  padding: 0 0.2rem;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.label-default {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  transition: all 0.2s;
+  pointer-events: none;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.with-helper {
+  padding-bottom: 1.2rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+
+  & label:hover {
+    text-decoration: underline;
+    color: #42b983;
+    cursor: pointer;
+  }
+
+  & input:hover {
+    text-decoration: underline;
+    color: #42b983;
+    cursor: pointer;
+  }
+}
+
+.input-error {
+  border-color: red;
+}
+
+.helper {
+  position: absolute;
+  font-size: 0.8rem;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.error {
+  color: red;
+}
