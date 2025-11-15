@@ -14,11 +14,13 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^7.0.0",
     "mongoose": "^5.9.21",
     "swagger-ui-express": "^4.1.4",
     "yamljs": "^0.3.0"
   },
   "scripts": {
+    "start": "node ./server/server.js",
     "dev:server": "nodemon ./server/server.js",
     "populate-db": "node ./server/scripts/populateDatabase.js",
     "server": "node ./server/server.js"
